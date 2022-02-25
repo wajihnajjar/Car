@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="588c3c31-6e37-4903-8854-987fd32d8e8b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../now-ui-react-native-master/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Login/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Login/styles.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Main/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Main/styles.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Singup/index.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/components/Singup/styles.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/index.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/client/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/db.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/models/user.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/routes/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/routes/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test (1)/New folder/server/routes/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../async-word-count/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../async-word-count/async-word-count.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../async-word-count/files/fileOne.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../async-word-count/files/fileTwo.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../node-req-count/server.js" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="25a9iukEVi7rnt27hxngvBnyrtq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="588c3c31-6e37-4903-8854-987fd32d8e8b" name="Default Changelist" comment="" />
+      <created>1645754462498</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645754462498</updated>
+    </task>
+    <servers />
+  </component>
+</project>
