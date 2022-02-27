@@ -26,7 +26,7 @@ import termsOfUseScreen from "./screens/termsOfUse/termsOfUseScreen";
 import notificationsScreen from "./screens/notifications/notificationsScreen";
 import myAddressesScreen from "./screens/myAddresses/myAddressesScreen";
 import addNewAddressScreen from "./screens/addNewAddress/addNewAddressScreen";
-
+// pulling
 const switchNavigator = createSwitchNavigator({
   Loading: LoadingScreen,
   Splash: SplashScreen,
