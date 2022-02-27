@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-import axios from 'axios'
+import axios from "axios";
 import {
   Text,
   View,
@@ -21,45 +20,45 @@ import { MaterialIcons } from "@expo/vector-icons";
 class RegisterScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener(
-        "hardwareBackPress",
-        this.handleBackButton.bind(this)
-        );
-    }
-    
-    componentWillUnmount() {
-        BackHandler.removeEventListener(
-            "hardwareBackPress",
-            this.handleBackButton.bind(this)
-            );
-        }
-        
-        handleBackButton = () => {
-            this.props.navigation.push("Login");
-            return true;
-        };
-        
-        state = {
-            username: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        };
-        
-         onSubmitFormHandler = async () => {
-          await axios.post(`http://192.168.11.73:5000/user/signup`, {
-              username:this.state.username,
-              email:this.state.email,
-              password :this.state.password,
-              confirmPassword :this.state.confirmPassword,
-            }).then(res=>{
-                console.log("Hamadydone")
-            }).catch(err=>{
-                console.log(err)
-            });
-           
-        };
-        render() {
-       return (
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener(
+      "hardwareBackPress",
+      this.handleBackButton.bind(this)
+    );
+  }
+
+  handleBackButton = () => {
+    this.props.navigation.push("Login");
+    return true;
+  };
+
+  state = {
+    username: "",
+    email: "",
+    password: "",
+  };
+
+  onSubmitFormHandler() {
+    axios
+      .post(`http://192.168.22.159:5000/user/signup`, {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then((res) => {
+        console.log("Hamadydone");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  render() {
+    return (
       <SafeAreaView style={{ flex: 1 }}>
         <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
         <ImageBackground
@@ -79,7 +78,7 @@ class RegisterScreen extends Component {
               {this.userNameTextField()}
               {this.emailTextField()}
               {this.passwordTextField()}
-              {this.confirmPasswordTextField()}
+
               {this.continueButton()}
             </ScrollView>
           </LinearGradient>
@@ -87,13 +86,29 @@ class RegisterScreen extends Component {
       </SafeAreaView>
     );
   }
-
   continueButton() {
+    var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     return (
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => {
-          this.props.navigation.push("Home");
+          if (
+            !this.state.username ||
+            !this.state.email ||
+            !this.state.password
+          ) {
+            alert("Please fill all required info");
+          } else {
+            if (this.state.email.indexOf("@") == -1) {
+              alert("email must be correct");
+            } else if (format.test(this.state.password) !== true) {
+              alert("Password must include uppercase/symboles/number");
+            } else if (this.state.username.length < 8) {
+              alert("username must have at least 8 characters");
+            } else {
+              this.onSubmitFormHandler(this.props.navigation.push("Home"));
+            }
+          }
         }}
       >
         <LinearGradient
@@ -102,40 +117,21 @@ class RegisterScreen extends Component {
           colors={["rgba(219, 24, 24, 1.0)", "rgba(219, 24, 24, 0.49)"]}
           style={styles.continueButtonStyle}
         >
-          <Text style={{ ...Fonts.whiteColor18Bold }}
-           onPress={this.onSubmitFormHandler}
-          >Continue</Text>
+          <Text style={{ ...Fonts.whiteColor18Bold }}>Continue</Text>
         </LinearGradient>
       </TouchableOpacity>
-    );
-  }
-
-  confirmPasswordTextField() {
-    return (
-      <TextInput
-      onChange={() => {
-        this.state.confirmPassword;
-        console.log(this.state.confirmPassword);
-      }}
-        style={styles.textFieldWrapStyle}
-        value={this.state.confirmPassword}
-        secureTextEntry={true}
-        onChangeText={(text) => this.setState({ confirmPassword: text })}
-        placeholder="Confirm Password"
-        placeholderTextColor="white"
-      />
     );
   }
 
   passwordTextField() {
     return (
       <TextInput
+        value={this.state.password}
         onChange={() => {
           this.state.password;
           console.log(this.state.password);
         }}
         style={styles.textFieldWrapStyle}
-        value={this.state.password}
         secureTextEntry={true}
         onChangeText={(text) => this.setState({ password: text })}
         placeholder="Password"
@@ -147,13 +143,12 @@ class RegisterScreen extends Component {
   emailTextField() {
     return (
       <TextInput
- 
-      onChange={() => {
-        this.state.email;
-        console.log(this.state.email);
-      }}
-        style={styles.textFieldWrapStyle}
         value={this.state.email}
+        onChange={() => {
+          this.state.email;
+          console.log(this.state.email);
+        }}
+        style={styles.textFieldWrapStyle}
         onChangeText={(text) => this.setState({ email: text })}
         placeholder="Email"
         placeholderTextColor="white"
@@ -164,13 +159,12 @@ class RegisterScreen extends Component {
   userNameTextField() {
     return (
       <TextInput
-
-      onChange={() => {
-        this.state.username;
-        console.log(this.state.username);
-      }}
-        style={styles.textFieldWrapStyle}
         value={this.state.username}
+        onChange={() => {
+          this.state.username;
+          console.log(this.state.username);
+        }}
+        style={styles.textFieldWrapStyle}
         onChangeText={(text) => this.setState({ username: text })}
         placeholder="Username"
         placeholderTextColor="white"
