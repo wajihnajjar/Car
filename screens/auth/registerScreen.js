@@ -41,11 +41,10 @@ class RegisterScreen extends Component {
     username: "",
     email: "",
     password: "",
-    // confirmPassword: "",
   };
 
-  onSubmitFormHandler ()  {
-   axios
+  onSubmitFormHandler() {
+    axios
       .post(`http://192.168.22.159:5000/user/signup`, {
         username: this.state.username,
         email: this.state.email,
@@ -57,7 +56,7 @@ class RegisterScreen extends Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -79,7 +78,7 @@ class RegisterScreen extends Component {
               {this.userNameTextField()}
               {this.emailTextField()}
               {this.passwordTextField()}
-              {/* {this.confirmPasswordTextField()} */}
+
               {this.continueButton()}
             </ScrollView>
           </LinearGradient>
@@ -96,36 +95,21 @@ class RegisterScreen extends Component {
           if (
             !this.state.username ||
             !this.state.email ||
-            !this.state.password 
+            !this.state.password
           ) {
             alert("Please fill all required info");
+          } else {
+            if (this.state.email.indexOf("@") == -1) {
+              alert("email must be correct");
+            } else if (format.test(this.state.password) !== true) {
+              alert("Password must include uppercase/symboles/number");
+            } else if (this.state.username.length < 8) {
+              alert("username must have at least 8 characters");
+            } else {
+              this.onSubmitFormHandler(this.props.navigation.push("Home"));
+            }
           }
-          else {
-            if (
-              this.state.email.indexOf("@")==-1){
-                alert("email must be correct"); 
-              }
-              else
-                // return; 
-              
-                if (
-                 (format.test(this.state.password) )!==true ){
-                    alert("Password must include uppercase/symboles/number") 
-                   
-                  } 
-                  else
-                  if (
-                    this.state.username.length<8){
-                       alert("username must have at least 8 characters") 
-                       
-                     }
-                     else {
-                      this.onSubmitFormHandler(this.props.navigation.push("Home"));
-                    }
-                    }
-          }
-         
-        }
+        }}
       >
         <LinearGradient
           start={{ x: 1, y: 0 }}
@@ -138,23 +122,6 @@ class RegisterScreen extends Component {
       </TouchableOpacity>
     );
   }
-
-  // confirmPasswordTextField() {
-  //   return (
-  //     <TextInput
-  //     onChange={() => {
-  //       this.state.confirmPassword;
-  //       console.log(this.state.confirmPassword);
-  //     }}
-  //       style={styles.textFieldWrapStyle}
-  //       value={this.state.confirmPassword}
-  //       secureTextEntry={true}
-  //       onChangeText={(text) => this.setState({ confirmPassword: text })}
-  //       placeholder="Confirm Password"
-  //       placeholderTextColor="white"
-  //     />
-  //   );
-  // }
 
   passwordTextField() {
     return (
