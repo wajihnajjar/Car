@@ -75,8 +75,7 @@ class LoginScreen extends Component {
     phoneNumber: "",
     backClickCount: 0,
     email: "",
-    password: "",
-    totalReactPackages: null,
+    password: ""
   };
 
   login() {
