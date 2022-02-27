@@ -37,7 +37,7 @@ class RegisterScreen extends Component {
         password: '',
         confirmPassword: '',
     }
-
+    
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>

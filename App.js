@@ -26,7 +26,7 @@ import termsOfUseScreen from "./screens/termsOfUse/termsOfUseScreen";
 import notificationsScreen from "./screens/notifications/notificationsScreen";
 import myAddressesScreen from "./screens/myAddresses/myAddressesScreen";
 import addNewAddressScreen from "./screens/addNewAddress/addNewAddressScreen";
-
+import sos from "./screens/sos/sos";
 const switchNavigator = createSwitchNavigator({
   Loading: LoadingScreen,
   Splash: SplashScreen,
@@ -55,6 +55,8 @@ const switchNavigator = createSwitchNavigator({
       Notifications: notificationsScreen,
       MyAddresses: myAddressesScreen,
       AddNewAddress: addNewAddressScreen,
+      Sos: sos ,
+
     },
   ),
 },
@@ -69,4 +71,8 @@ export default () => {
     <App />
   );
 };
+
+
+
+
 

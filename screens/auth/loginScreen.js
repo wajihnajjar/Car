@@ -111,23 +111,23 @@ class LoginScreen extends Component {
         )
     }
 
-    // phoneNumberTextField() {
-    //     return (
-    //         <IntlPhoneInput
-    //             defaultCountry="IN"
-    //             onChangeText={({ phoneNumber }) => this.setState({ phoneNumber: phoneNumber })}
-    //             phoneInputStyle={{ flex: 1, ...Fonts.whiteColor14Medium, marginLeft: Sizes.fixPadding }}
-    //             placeholder="Phone Number"
-    //             dialCodeTextStyle={{ ...Fonts.whiteColor14Medium, marginLeft: Sizes.fixPadding }}
-    //             containerStyle={{
-    //                 backgroundColor: 'rgba(203, 189, 189, 0.73)',
-    //                 borderRadius: Sizes.fixPadding * 2.0,
-    //                 height: 56.0,
-    //                 marginTop: Sizes.fixPadding * 8.0
-    //             }}
-    //         />
-    //     )
-    // }
+    phoneNumberTextField() {
+        return (
+            <IntlPhoneInput
+                defaultCountry="+216"
+                onChangeText={({ phoneNumber }) => this.setState({ phoneNumber: phoneNumber })}
+                phoneInputStyle={{ flex: 1, ...Fonts.whiteColor14Medium, marginLeft: Sizes.fixPadding }}
+                placeholder="Phone Number"
+                dialCodeTextStyle={{ ...Fonts.whiteColor14Medium, marginLeft: Sizes.fixPadding }}
+                containerStyle={{
+                    backgroundColor: 'rgba(203, 189, 189, 0.73)',
+                    borderRadius: Sizes.fixPadding * 2.0,
+                    height: 56.0,
+                    marginTop: Sizes.fixPadding * 8.0
+                }}
+            />
+        )
+    }
 
     loginWithGoogleButton() {
         return (
