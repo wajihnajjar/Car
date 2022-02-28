@@ -43,9 +43,10 @@ class RegisterScreen extends Component {
     password: "",
   };
 
+
   onSubmitFormHandler() {
     axios
-      .post(`http://192.168.22.163:5000/user/signup`, {
+      .post(`http://192.168.22.206:5000/user/signup`, {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
@@ -106,7 +107,7 @@ class RegisterScreen extends Component {
             } else if (this.state.username.length < 8) {
               alert("username must have at least 8 characters");
             } else {
-              this.onSubmitFormHandler(this.props.navigation.push("Home"));
+              this.onSubmitFormHandler(this.props.navigation.push("Verification"));
             }
           }
         }}

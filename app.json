@@ -3,6 +3,11 @@
     "name": "RN Carhbty",
     "slug": "rn-Carhbty",
     "version": "1.0.0",
+    "facebookScheme":"fbapi20130214",
+    "facebookAppId": "1979313035585850",
+    "facebookDisplayName": "Logicarhabty",
+    "facebookAutoLogAppEventsEnabled": false,
+    "facebookAdvertiserIDCollectionEnabled": false,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {

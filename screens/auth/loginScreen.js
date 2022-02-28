@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+// import {
+//   GoogleSignin,
+//   GoogleSigninButton,
+//   statusCodes,
+// } from "react-native-google-signin";
 import {
   Text,
   View,
@@ -15,12 +19,12 @@ import {
   Dimensions,
   BackHandler,
   Animated,
-  // AsyncStorage,
 } from "react-native";
 import { withNavigation } from "react-navigation";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
-
+import * as Google from "expo-google-app-auth";
+import * as Facebook from "expo-facebook";
 import { NavigationEvents } from "react-navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -75,34 +79,99 @@ class LoginScreen extends Component {
     phoneNumber: "",
     backClickCount: 0,
     email: "",
-    password: ""
+    password: "",
+    familyName: "",
+    givenName: "",
+    name: "",
+    photoUrl: "",
   };
 
   login() {
     axios
-      .post("http://192.168.22.163:5000/user/login", {
+      .post("http://192.168.22.206:5000/user/login", {
         email: this.state.email,
         password: this.state.password,
       })
       .then((res) => {
         console.log(res.data);
+        console.log(res.data.msg, "im her ");
         if (res.data.msg === "Logged in!") {
+          console.log(res.data.msg, "im her ");
+          this.props.navigation.navigate("Home");
+
           // this.setState({isLoading:false})
-          this.props.navigation.navigate("Verification");
+          // this.props.navigation.navigate("Home");
           let storeData = async () => {
             try {
-              await AsyncStorage.setItem("user", JSON.stringify(res.data.user));
+              await AsyncStorage.setItem(
+                "user",
+                JSON.stringify(res.data.token)
+              );
             } catch (error) {
               // Error saving data
               console.log(error);
             }
           };
           storeData();
-        } else {
-          Alert.alert(res.data.msg);
+        } else if (res.data.msg !== "Logged in!") {
+          alert("Username or password is incorrect!");
         }
       })
       .catch((err) => console.log(err));
+  }
+  async signInWithGoogleAsync() {
+    try {
+      const result = await Google.logInAsync({
+        // androidClientId: YOUR_CLIENT_ID_HERE,
+        iosClientId:
+          "1095208632020-mtvauv1bv63mttq3ist9plidqfcu938n.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+      });
+      console.log(result.user);
+
+      if (result.type === "success") {
+        console.log(result.accessToken);
+        axios
+          .post("http://192.168.22.225:5000/user/googleSignIn", {
+            email: result.user.email,
+            username: result.user.name,
+            photoUrl: result.user.photoUrl,
+          })
+          .then((res) => {
+            console.log(res, "response");
+          })
+          .catch((err) => {
+            console.log(err, "error");
+          });
+      } else {
+        console.log("cancelled");
+      }
+    } catch (e) {
+      console.log("error", e);
+    }
+  }
+
+  async fbLogin() {
+    try {
+      await Facebook.initializeAsync({
+        appId: "1979313035585850",
+      });
+      const { type, token, expirationDate, permissions, declinedPermissions } =
+        await Facebook.logInWithReadPermissionsAsync({
+          permissions: ["public_profile"],
+        });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}`
+        );
+        alert("Logged in!", `Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
   }
 
   render() {
@@ -133,7 +202,7 @@ class LoginScreen extends Component {
               {this.EmailTextField()}
               {this.PasswordTextField()}
               {this.continueButton()}
-              {this.otpText()}
+              {this.registerButton()}
               {this.loginWithFacebookButton()}
               {this.loginWithGoogleButton()}
             </ScrollView>
@@ -216,6 +285,7 @@ class LoginScreen extends Component {
           resizeMode="cover"
         />
         <Text
+          onPress={this.signInWithGoogleAsync}
           style={{
             ...Fonts.blackColor14Medium,
             marginLeft: Sizes.fixPadding + 5.0,
@@ -236,6 +306,7 @@ class LoginScreen extends Component {
           resizeMode="cover"
         />
         <Text
+          onPress={this.fbLogin}
           style={{
             ...Fonts.whiteColor14Medium,
             marginLeft: Sizes.fixPadding + 5.0,
@@ -277,12 +348,22 @@ class LoginScreen extends Component {
         <LinearGradient
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          colors={["rgba(219, 24, 24, 1.0)", "rgba(219, 24, 24, 0.49)"]}
+          colors={["rgba(253, 153, 2,1.2)", "rgba(253, 153, 2, 0.49)"]}
           style={styles.continueButtonStyle}
         >
-          <Text style={{ ...Fonts.whiteColor18Bold }}>Continue</Text>
+          <Text style={{ ...Fonts.whiteColor18Bold }}>Login</Text>
         </LinearGradient>
       </TouchableOpacity>
+    );
+  }
+  registerButton() {
+    return (   
+          <Text  style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }} 
+        onPress={() => {
+          this.props.navigation.navigate("Register");
+        }}
+        >Register</Text>
+      
     );
   }
 
@@ -294,21 +375,18 @@ class LoginScreen extends Component {
           marginBottom: Sizes.fixPadding * 4.0,
         }}
       >
-        <Text style={{ ...Fonts.whiteColor36Bold }}>Welcome back</Text>
-        <Text
-          style={{
-            ...Fonts.whiteColor14Medium,
-            //marginTop: Sizes.fixPadding - 5.0
-          }}
-        >
-          Login your account
-        </Text>
+        <Text style={{ ...Fonts.whiteColor36Bold }}></Text>
+      
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  registerButton:{
+    alignItems: "center",
+    justifyContent: "center",
+  },
   textFieldWrapStyle: {
     alignItems: "center",
     justifyContent: "center",
