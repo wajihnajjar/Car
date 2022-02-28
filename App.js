@@ -1,6 +1,6 @@
 import React from "react";
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 import LoadingScreen from "./components/loadingScreen";
 import loginScreen from "./screens/auth/loginScreen";
 import SplashScreen from "./screens/splashScreen";
@@ -26,16 +26,17 @@ import termsOfUseScreen from "./screens/termsOfUse/termsOfUseScreen";
 import notificationsScreen from "./screens/notifications/notificationsScreen";
 import myAddressesScreen from "./screens/myAddresses/myAddressesScreen";
 import addNewAddressScreen from "./screens/addNewAddress/addNewAddressScreen";
-
-const switchNavigator = createSwitchNavigator({
-  Loading: LoadingScreen,
-  Splash: SplashScreen,
-  mainFlow: createStackNavigator(
-    {
+import sos from "./screens/sos/sos";
+// pulling
+const switchNavigator = createSwitchNavigator(
+  {
+    Loading: LoadingScreen,
+    Splash: SplashScreen,
+    mainFlow: createStackNavigator({
       Login: loginScreen,
       Verification: verificationScreen,
-      Register: registerScreen,
       Home: homeScreen,
+      Register: registerScreen,
       ServiceProvider: serviceProviderScreen,
       SelectCar: selectCarScreen,
       AddNewCar: addNewCarScreen,
@@ -55,18 +56,16 @@ const switchNavigator = createSwitchNavigator({
       Notifications: notificationsScreen,
       MyAddresses: myAddressesScreen,
       AddNewAddress: addNewAddressScreen,
-    },
-  ),
-},
+      Sos: sos,
+    }),
+  },
   {
-    initialRouteName: 'Loading',
-  });
+    initialRouteName: "Loading",
+  }
+);
 
 const App = createAppContainer(switchNavigator);
 
 export default () => {
-  return (
-    <App />
-  );
+  return <App />;
 };
-

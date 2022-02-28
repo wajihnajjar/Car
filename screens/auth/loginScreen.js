@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+// import {
+//   GoogleSignin,
+//   GoogleSigninButton,
+//   statusCodes,
+// } from "react-native-google-signin";
 import {
   Text,
   View,
@@ -84,16 +88,19 @@ class LoginScreen extends Component {
 
   login() {
     axios
-      .post("http://192.168.22.225:5000/user/login", {
+      .post("http://192.168.22.206:5000/user/login", {
         email: this.state.email,
         password: this.state.password,
       })
       .then((res) => {
         console.log(res.data);
+        console.log(res.data.msg, "im her ");
         if (res.data.msg === "Logged in!") {
-          // this.setState({isLoading:false})
-          this.props.navigation.navigate("Verification");
+          console.log(res.data.msg, "im her ");
+          this.props.navigation.navigate("Home");
 
+          // this.setState({isLoading:false})
+          // this.props.navigation.navigate("Home");
           let storeData = async () => {
             try {
               await AsyncStorage.setItem(
@@ -195,7 +202,7 @@ class LoginScreen extends Component {
               {this.EmailTextField()}
               {this.PasswordTextField()}
               {this.continueButton()}
-              {this.otpText()}
+              {this.registerButton()}
               {this.loginWithFacebookButton()}
               {this.loginWithGoogleButton()}
             </ScrollView>
@@ -341,12 +348,22 @@ class LoginScreen extends Component {
         <LinearGradient
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          colors={["rgba(219, 24, 24, 1.0)", "rgba(219, 24, 24, 0.49)"]}
+          colors={["rgba(253, 153, 2,1.2)", "rgba(253, 153, 2, 0.49)"]}
           style={styles.continueButtonStyle}
         >
-          <Text style={{ ...Fonts.whiteColor18Bold }}>Continue</Text>
+          <Text style={{ ...Fonts.whiteColor18Bold }}>Login</Text>
         </LinearGradient>
       </TouchableOpacity>
+    );
+  }
+  registerButton() {
+    return (   
+          <Text  style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }} 
+        onPress={() => {
+          this.props.navigation.navigate("Register");
+        }}
+        >Register</Text>
+      
     );
   }
 
@@ -358,21 +375,18 @@ class LoginScreen extends Component {
           marginBottom: Sizes.fixPadding * 4.0,
         }}
       >
-        <Text style={{ ...Fonts.whiteColor36Bold }}>Welcome back</Text>
-        <Text
-          style={{
-            ...Fonts.whiteColor14Medium,
-            //marginTop: Sizes.fixPadding - 5.0
-          }}
-        >
-          Login your account
-        </Text>
+        <Text style={{ ...Fonts.whiteColor36Bold }}></Text>
+      
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  registerButton:{
+    alignItems: "center",
+    justifyContent: "center",
+  },
   textFieldWrapStyle: {
     alignItems: "center",
     justifyContent: "center",
