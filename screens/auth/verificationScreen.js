@@ -62,7 +62,9 @@ class VerificationScreen extends Component {
                         <ScrollView
                             showsVerticalScrollIndicator={false}
                         >
+                           
                             {this.backArrow()}
+                            {this.otpText()}
                             {this.verificationInfo()}
                             {this.otpFields()}
                             {this.resendInfo()}
@@ -74,7 +76,13 @@ class VerificationScreen extends Component {
             </SafeAreaView >
         )
     }
-
+    otpText() {
+        return (
+          <Text style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }}>
+            We’ll send otp for verification
+          </Text>
+        );
+      }
     backArrow() {
         return (
             <MaterialIcons
@@ -118,7 +126,7 @@ class VerificationScreen extends Component {
                     this.setState({ isLoading: true })
                     setTimeout(() => {
                         this.setState({ isLoading: false })
-                        this.props.navigation.push('Register');
+                        this.props.navigation.push('Home');
                     }, 2000);
                 }}
             >
@@ -210,7 +218,7 @@ class VerificationScreen extends Component {
                             this.setState({ isLoading: true })
                             setTimeout(() => {
                                 this.setState({ isLoading: false })
-                                this.props.navigation.navigate('Register');
+                                this.props.navigation.navigate('Home');
                             }, 2000);
                         }}
                     />
