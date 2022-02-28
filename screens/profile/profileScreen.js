@@ -36,7 +36,7 @@ class ProfileScreen extends Component {
 
   getdata() {
     return axios
-      .get("http://192.168.11.100:5000/user/profil")
+      .get("http://192.168.22.169:5000/user/profil")
       .then((res) => {
         console.log(res.data, "===================================>");
       })
