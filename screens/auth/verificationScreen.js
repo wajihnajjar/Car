@@ -62,7 +62,6 @@ class VerificationScreen extends Component {
                         <ScrollView
                             showsVerticalScrollIndicator={false}
                         >
-                           
                             {this.backArrow()}
                             {this.otpText()}
                             {this.verificationInfo()}
@@ -133,7 +132,7 @@ class VerificationScreen extends Component {
                 <LinearGradient
                     start={{ x: 1, y: 0 }}
                     end={{ x: 0, y: 0 }}
-                    colors={['rgba(219, 24, 24, 1.0)', 'rgba(219, 24, 24, 0.49)',]}
+                    colors={["rgba(253, 153, 2,1.2)", "rgba(253, 153, 2, 0.49)"]}
                     style={styles.continueButtonStyle}
                 >
                     <Text style={{ ...Fonts.whiteColor18Bold }}>

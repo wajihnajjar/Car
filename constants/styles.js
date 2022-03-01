@@ -103,7 +103,7 @@ export const Fonts = {
 
     primaryColor12Regular: {
         fontSize: 12.0,
-        color: '#DB1818',
+        color: '#F5B703',
         fontFamily: 'Montserrat_Regular',
     },
 
@@ -115,7 +115,7 @@ export const Fonts = {
 
     primaryColor14Medium: {
         fontSize: 14.0,
-        color: '#DB1818',
+        color: '#F5B703',
         fontFamily: 'Montserrat_Medium',
     },
 
@@ -184,7 +184,7 @@ export const Fonts = {
 export const Colors = {
     whiteColor: '#FFFFFF',
     blackColor: '#000000',
-    primaryColor: '#DB1818',
+    primaryColor: '#000000',
     ratingColor: '#BFDC0F',
     grayColor: '#CFC6C6',
 }
