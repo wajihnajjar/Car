@@ -1,12 +1,13 @@
 import React, { Component, useState } from "react";
-import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, TouchableOpacity, Animated, Text, Image, TouchableHighlight } from "react-native";
+import { SafeAreaView, View, BackHandler, StatusBar, AsyncStorage ,  StyleSheet, TouchableOpacity, Animated, Text, Image, TouchableHighlight } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Snackbar } from 'react-native-paper';
+import axios from "axios";
 
-const favoritesList = [
+var favoritesList = [
     {
         key: '1',
         image: require('../../assets/images/service_provider/provider_1.jpg'),
@@ -20,12 +21,51 @@ const favoritesList = [
         address: 'G-9, Opera Canter, New York.',
     },
 ];
-
+var self = this 
 class FavoritesScreen extends Component {
 
-    componentDidMount() {
+state ={ 
+arr:[]
+
+
+
+}
+
+    async componentDidMount() {
+        var r = []
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
-    }
+        await AsyncStorage.getItem("user_id") .then( async   (res)=> { 
+            await axios.post('http://192.168.22.165:5000/user/getFavorite' , {user_id:res}).then(async (res1)=> { 
+         var unique = new Set(res1.data[0].fav)
+ var reste = Array.from(unique)
+
+for( let i = 0 ; i< reste.length ; i ++){ 
+
+await  axios.post("http://192.168.22.165:5000/user/getMechanic" , {mechanic_id:reste[i]}).then(result=> { 
+var a = {
+key : 0 , 
+image  : "", 
+name :  "" , 
+address :""  , 
+
+}
+a.key = i 
+a.image = require('../../assets/images/service_provider/provider_1.jpg')
+a.address = result.data[0].address
+a["name"] = result.data[0].namePlace
+console.log(a)
+r.push(a)
+})
+
+}
+        })
+                }) 
+             
+            this.setState({
+arr: r 
+            })
+favoritesList = this.state.arr
+        }
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
@@ -70,11 +110,12 @@ Array(favoritesList.length + 1)
     .forEach((_, i) => {
         rowSwipeAnimatedValues[`${i}`] = new Animated.Value(0);
     });
-
 const Favorites = () => {
     const [showSnackBar, setShowSnackBar] = useState(false);
-
     const [listData, setListData] = useState(favoritesList);
+setTimeout(()=> { 
+setListData (favoritesList)
+},1000)
 
     const closeRow = (rowMap, rowKey) => {
         if (rowMap[rowKey]) {
