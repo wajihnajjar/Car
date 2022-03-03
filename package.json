@@ -23,9 +23,11 @@
     "expo-facebook": "~11.3.1",
     "expo-font": "^9.2.1",
     "expo-google-app-auth": "~8.2.5",
+    "expo-image-picker": "~10.2.2",
     "expo-linear-gradient": "^9.2.0",
     "expo-status-bar": "~1.0.4",
     "firebase": "^9.6.7",
+    "link": "^0.1.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
@@ -34,8 +36,11 @@
     "react-native-calendar-strip": "^2.2.5",
     "react-native-dialog": "^9.2.1",
     "react-native-elements": "^3.4.2",
+    "react-native-file-type": "^1.0.0",
+    "react-native-fs": "^2.19.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-google-signin": "^2.1.1",
+    "react-native-image-picker": "^4.7.3",
     "react-native-intl-phone-input": "^1.2.27",
     "react-native-maps": "^0.29.3",
     "react-native-paper": "^4.11.2",
@@ -47,7 +52,8 @@
     "react-native-webview": "^11.17.2",
     "react-navigation": "^4.4.4",
     "react-navigation-shared-element": "^2.3.1",
-    "react-navigation-stack": "^2.10.4"
+    "react-navigation-stack": "^2.10.4",
+    "run-ios": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

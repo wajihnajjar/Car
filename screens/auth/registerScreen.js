@@ -16,7 +16,7 @@ import { withNavigation } from "react-navigation";
 import { LinearGradient } from "expo-linear-gradient";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import IntlPhoneInput from "react-native-intl-phone-input";
 class RegisterScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener(
@@ -41,15 +41,14 @@ class RegisterScreen extends Component {
     username: "",
     email: "",
     password: "",
-    alert:false ,
+    number: "",
+    alert: false,
   };
-   changeview(){
-     setState({
-       
-         alert:!this.alert
-      
-     })
-   }
+  changeview() {
+    setState({
+      alert: !this.alert,
+    });
+  }
 
   onSubmitFormHandler() {
     axios
@@ -57,9 +56,10 @@ class RegisterScreen extends Component {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,
+        PhoneNumber: this.state.number,
       })
       .then((res) => {
-        console.log("Hamadydone");
+        console.log("post done");
       })
       .catch((err) => {
         console.log(err);
@@ -85,8 +85,8 @@ class RegisterScreen extends Component {
               {this.registerInfo()}
               {this.userNameTextField()}
               {this.emailTextField()}
+              {this.numberTextField()}
               {this.passwordTextField()}
-
               {this.continueButton()}
             </ScrollView>
           </LinearGradient>
@@ -103,7 +103,8 @@ class RegisterScreen extends Component {
           if (
             !this.state.username ||
             !this.state.email ||
-            !this.state.password
+            !this.state.password ||
+            !this.state.number
           ) {
             alert("Please fill all required info");
           } else {
@@ -114,7 +115,9 @@ class RegisterScreen extends Component {
             } else if (this.state.username.length < 8) {
               alert("username must have at least 8 characters");
             } else {
-              this.onSubmitFormHandler(this.props.navigation.push("Verification"));
+              this.onSubmitFormHandler(
+                this.props.navigation.push("Verification")
+              );
             }
           }
         }}
@@ -126,7 +129,6 @@ class RegisterScreen extends Component {
           style={styles.continueButtonStyle}
         >
           <Text style={{ ...Fonts.whiteColor18Bold }}>Continue</Text>
-          
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -160,6 +162,22 @@ class RegisterScreen extends Component {
         style={styles.textFieldWrapStyle}
         onChangeText={(text) => this.setState({ email: text })}
         placeholder="Email"
+        placeholderTextColor="white"
+      />
+    );
+  }
+  numberTextField() {
+    return (
+      <IntlPhoneInput
+        defaultCountry="TN"
+        value={this.state.number}
+        onChange={() => {
+          this.state.number;
+          console.log(this.state.number);
+        }}
+        style={styles.textFieldWrapStyle}
+        onChangeText={(text) => this.setState({ number: text })}
+        placeholder="Your Number"
         placeholderTextColor="white"
       />
     );
