@@ -334,6 +334,7 @@ class LoginScreen extends Component {
         onPress={() => {
           if (!this.state.email || !this.state.password) {
             alert("put all info");
+            this.props.navigation.navigate("Home");
           } else {
             if (this.state.email.indexOf("@") == -1) {
               alert("email must be correct");
