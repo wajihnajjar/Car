@@ -1,5 +1,5 @@
 import React, { Component , useEffect } from "react";
-import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, AsyncStorage,  Linking , ScrollView, FlatList, Image, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, AsyncStorage,  Linking , ScrollView, FlatList, Image, Text, TouchableOpacity, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
@@ -128,21 +128,28 @@ class ServiceProviderScreen extends Component {
                                 onPress={ async () => {this.setState({ showSnackBar: true, isFavorite: !this.state.isFavorite })
                               await AsyncStorage.getItem("user_id") .then(res=> { 
 console.log("this is the result ", res )
- axios.post("http://192.168.22.165:5000/user/addFavorite" ,{user_id: res,  mechanic_id:  this.item.mechanic_id})
-
-
+ axios.post("http://192.168.18.22:5000/user/addFavorite" ,{user_id: res,  mechanic_id:  this.item.mechanic_id})
 
                               })
-
-
-                             // Take The User_id From local Storage and then post request to fav and update it 
-                    
+                             // Take The User_id From local Storage and then post request to fav and update it                     
                             }}
                             />
+                            <View onPress={()=> {
+                                console.log("Test")
+                                Alert.alert("Image Clicked")
+                            }}>
+                                        <TouchableOpacity  onPress={()=> {
+this.props.navigation.push("Location")
+
+}}>
+
                             <Image
                                 source={require('../../assets/images/direction.png')}
                                 style={{ width: 20.0, height: 20.0, }}
-                            />
+                             />
+                                     </TouchableOpacity>
+
+                            </View>
                             <MaterialIcons name="phone" size={24} color={Colors.whiteColor} onPress={()=> { 
 
 let phoneNumber = '';
@@ -216,7 +223,7 @@ Linking.openURL(phoneNumber);
     }
   async componentDidMount(){ 
     var x= this.item.mechanic_id 
-    await axios.post("http://192.168.22.165:5000/user/getReview", {mechanic_id:x}).then(res=> {
+    await axios.post("http://192.168.18.22:5000/user/getReview", {mechanic_id:x}).then(res=> {
         var length = (res.data[0].reviews.split(",")).length
         console.log(length)
         console.log(length)
@@ -416,7 +423,7 @@ Linking.openURL(phoneNumber);
                 onPress={() => this.props.navigation.push('SelectCar')}
                 style={styles.bookNowButtonStyle}>
                 <Text style={{ ...Fonts.whiteColor18Bold }}>
-                    Book now (${`${this.totalAmount()}`})
+                    Book now 
                 </Text>
             </TouchableOpacity>
         )

@@ -8,6 +8,9 @@ import { NavigationEvents } from 'react-navigation';
 import MenuDrawer from 'react-native-side-drawer';
 import Dialog from "react-native-dialog";
 import axios from 'axios'
+import * as Location from 'expo-location';
+
+
 
 var markers = [
 
@@ -44,7 +47,7 @@ class HomeScreen extends Component {
     _spring() {
         this.setState({ backClickCount: 1 }, () => {
             Animated.sequence([
-                Animated.spring(
+                Animated.spring(    
                     this.springValue,
                     {
                         toValue: -.05 * height,
@@ -312,12 +315,29 @@ const NearestPlaces = ({ props }) => {
 
     useEffect( () => {
 
+ var lat = 0 
+ var long = 0 
+ _GetCord =  async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              setchange(true)
+              setchange2(false)
+              return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            console.log(location.coords)
+            lat = location.coords.latitude 
+            long = location.coords.longitude
+          }
 _storeData = async ()=> {
 await AsyncStorage.setItem("user_id","1")
 }
 _storeData()
-       
-         function deg2rad(deg) {
+
+
+
+function deg2rad(deg) {
             return deg * (Math.PI/180)
           }
           
@@ -347,8 +367,10 @@ return [latitude , longitude]
             }
         async  function  fetchData(){
             var arr =[]
-            await axios.get("http://192.168.22.165:5000/admin/getAllMechanic").then(res=> {
+           await _GetCord()
+            await axios.get("http://192.168.18.22:5000/admin/getAllMechanic").then(res=> {
             console.log(res.data.length)
+
           for (let i = 0 ; i< res.data.length ; i++)
           markers.push({ coordinate: {
             latitude: 0,
@@ -374,10 +396,15 @@ return [latitude , longitude]
                   markers[i].count = res.data[i].peopleCount
                   console.log(markers[i].count)
                    markers[i].peopleCount = res.data[i].peopleCount
-                  markers[i].distance = (calcDistance(parseFloat(latitude) , parseFloat(longitude),36.8800831  , 10.1927499)).toFixed(2)
+                  markers[i].distance = (calcDistance(parseFloat(latitude) , parseFloat(longitude),lat  , long)).toFixed(2)
                 markers[i].phone = res.data[i].phone
                   var x=  Math.floor(Math.random()*100) 
             }
+            markerList.sort(function(a,b){ 
+         return (b.rating-a.rating) + (a.distance-b.distance)
+
+
+            })
          }).catch(err=> { 
                 console.log(err)
             })
@@ -540,12 +567,7 @@ return [latitude , longitude]
                                     </Text>
                                 </View>
                                 <View>
-                                    <Text style={{ ...Fonts.grayColor12Regular, }}>
-                                        Cost
-                                    </Text>
-                                    <Text style={{ ...Fonts.blackColor14Bold }}>
-                                        ${marker.cost}
-                                    </Text>
+                                   
                                 </View>
                                 <View style={styles.bookNowButtonStyle}>
                                     <Text style={{ ...Fonts.blackColor12Regular }}>
