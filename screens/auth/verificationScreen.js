@@ -63,6 +63,7 @@ class VerificationScreen extends Component {
                             showsVerticalScrollIndicator={false}
                         >
                             {this.backArrow()}
+                            {this.otpText()}
                             {this.verificationInfo()}
                             {this.otpFields()}
                             {this.resendInfo()}
@@ -74,7 +75,13 @@ class VerificationScreen extends Component {
             </SafeAreaView >
         )
     }
-
+    otpText() {
+        return (
+          <Text style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }}>
+            We’ll send otp for verification
+          </Text>
+        );
+      }
     backArrow() {
         return (
             <MaterialIcons
@@ -118,14 +125,14 @@ class VerificationScreen extends Component {
                     this.setState({ isLoading: true })
                     setTimeout(() => {
                         this.setState({ isLoading: false })
-                        this.props.navigation.push('Register');
+                        this.props.navigation.push('Home');
                     }, 2000);
                 }}
             >
                 <LinearGradient
                     start={{ x: 1, y: 0 }}
                     end={{ x: 0, y: 0 }}
-                    colors={['rgba(219, 24, 24, 1.0)', 'rgba(219, 24, 24, 0.49)',]}
+                    colors={["rgba(253, 153, 2,1.2)", "rgba(253, 153, 2, 0.49)"]}
                     style={styles.continueButtonStyle}
                 >
                     <Text style={{ ...Fonts.whiteColor18Bold }}>
@@ -210,7 +217,7 @@ class VerificationScreen extends Component {
                             this.setState({ isLoading: true })
                             setTimeout(() => {
                                 this.setState({ isLoading: false })
-                                this.props.navigation.navigate('Register');
+                                this.props.navigation.navigate('Home');
                             }, 2000);
                         }}
                     />

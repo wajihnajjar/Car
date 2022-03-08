@@ -1,5 +1,5 @@
 import React, { useState, Component, useEffect } from "react";
-import { Text, View, SafeAreaView, StatusBar, Animated, BackHandler, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import { Text, View, SafeAreaView,  AsyncStorage ,StatusBar, Animated, BackHandler, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -7,106 +7,17 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationEvents } from 'react-navigation';
 import MenuDrawer from 'react-native-side-drawer';
 import Dialog from "react-native-dialog";
+import axios from 'axios'
 
-const markers = [
-    {
-        coordinate: {
-            latitude: 22.6293867,
-            longitude: 88.4354486,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6345648,
-            longitude: 88.4377279,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6281662,
-            longitude: 88.4410113,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6341137,
-            longitude: 88.4497463,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6292757,
-            longitude: 88.444781,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6304900,
-            longitude: 88.4377956,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6287471,
-            longitude: 88.4392547,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    },
-    {
-        coordinate: {
-            latitude: 22.6224884,
-            longitude: 88.4332895,
-        },
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        place: 'Perfect Wash Service',
-        address: '108, Yogi Point, New York.',
-        rating: '4.5',
-        distance: '3.5',
-        cost: 50,
-    }
+var markers = [
+
+
+    
+
+
 
 ];
+var map = new Map()
 
 const { width, height } = Dimensions.get('screen');
 
@@ -371,21 +282,109 @@ const cardWidth = width / 1.5;
 
 const NearestPlaces = ({ props }) => {
 
-    const [markerList] = useState(markers);
+    var [markerList] = useState(markers);
+
     const [region] = useState(
         {
-            latitude: 22.62938671242907,
-            longitude: 88.4354486029795,
-            latitudeDelta: 0.04864195044303443,
-            longitudeDelta: 0.040142817690068,
+            latitude: 33.7931605 ,
+            longitude: 9.5607653,
+            latitudeDelta: 2.0043,
+            longitudeDelta:2.0034,
         }
     );
+
+    let all= {
+        coordinate: {
+            latitude: 0,
+            longitude: 0,
+        },
+        place: '',
+        address: '',
+        rating: 0,
+        distance: 0,
+        cost: 0,
+
+
+     }
 
     let mapAnimation = new Animated.Value(0);
     let mapIndex = 0;
 
-    useEffect(() => {
-        mapAnimation.addListener(({ value }) => {
+    useEffect( () => {
+
+_storeData = async ()=> {
+await AsyncStorage.setItem("user_id","1")
+}
+_storeData()
+       
+         function deg2rad(deg) {
+            return deg * (Math.PI/180)
+          }
+          
+         function  calcDistance(lat1 , lon1 , lat2,lon2 ) {
+
+            var R = 6371; // Radius of the earth in km
+            var dLat = deg2rad(lat2-lat1);  // deg2rad below
+            var dLon = deg2rad(lon2-lon1); 
+            var a = 
+              Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+              Math.sin(dLon/2) * Math.sin(dLon/2)
+              ; 
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+            var d = R * c; // Distance in km
+            return d;
+          }
+
+          function getLatLon(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+              console.log("Latitude is "+latitude);
+              console.log("Longitude is "+longitude);
+              console.log(latitude)
+              console.log(longitude)
+return [latitude , longitude]
+            }
+        async  function  fetchData(){
+            var arr =[]
+            await axios.get("http://192.168.22.165:5000/admin/getAllMechanic").then(res=> {
+            console.log(res.data.length)
+          for (let i = 0 ; i< res.data.length ; i++)
+          markers.push({ coordinate: {
+            latitude: 0,
+            longitude: 0,
+        },
+        place: '',
+        address: '',
+        rating: 0,
+        distance: 0,
+        cost: 0,
+})
+            for (var  i = 0 ;i< res.data.length;i ++){  
+                console.log(res.data[i])
+                markers[i].mechanic_id = res.data[i].mechanic_id       
+             markers[i].place= res.data[i].namePlace ; 
+                 markers[i].address=res.data[i].address 
+                  var latitude = res.data[i].cordinate.substr(0,res.data[i].cordinate.substr(0,res.data[i].cordinate.indexOf(" "))) ; 
+                  var longitude = res.data[i].cordinate.substr(res.data[i].cordinate.indexOf(' ')+1) 
+                  markers[i].coordinate.latitude = parseFloat(latitude) 
+                  markers[i].coordinate.longitude = parseFloat(longitude) 
+                  var rate = (((res.data[i].stars/res.data[i].peopleCount).toFixed(2)))
+                  markers[i].rating = rate 
+                  markers[i].count = res.data[i].peopleCount
+                  console.log(markers[i].count)
+                   markers[i].peopleCount = res.data[i].peopleCount
+                  markers[i].distance = (calcDistance(parseFloat(latitude) , parseFloat(longitude),36.8800831  , 10.1927499)).toFixed(2)
+                markers[i].phone = res.data[i].phone
+                  var x=  Math.floor(Math.random()*100) 
+            }
+         }).catch(err=> { 
+                console.log(err)
+            })
+                    }
+                    fetchData()
+                console.log("Test")
+            mapAnimation.addListener(({ value }) => {
             let index = Math.floor(value / cardWidth + 0.3);
             if (index >= markerList.length) {
                 index = markerList.length;
@@ -393,9 +392,7 @@ const NearestPlaces = ({ props }) => {
             if (index <= 0) {
                 index = 0;
             }
-
             clearTimeout(regionTimeout);
-
             const regionTimeout = setTimeout(() => {
                 if (mapIndex != index) {
                     mapIndex = index;
@@ -410,7 +407,7 @@ const NearestPlaces = ({ props }) => {
                 }
             }, 10);
         });
-    });
+    },[]);
 
     const interpolation = markerList.map((marker, index) => {
         const inputRange = [
