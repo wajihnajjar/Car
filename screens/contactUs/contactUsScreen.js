@@ -5,6 +5,7 @@ import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
 
 class ContactUsScreen extends Component {
 
@@ -47,8 +48,16 @@ class ContactUsScreen extends Component {
             <TouchableOpacity
                 activeOpacity={0.9}
                 style={styles.submitButton}
-                onPress={() => this.props.navigation.goBack()}
-            >
+                onPress={ async () => {
+                    await axios.post("http://192.168.22.202:5000/admin/addReview",{message:this.state.message}).then(res=> { 
+console.log("Review Done ")
+                    })
+                    
+                
+                    
+                    this.props.navigation.goBack()}
+                }
+                    >
                 <Text style={{ ...Fonts.whiteColor18Bold }}>
                     Sumbit
                 </Text>
