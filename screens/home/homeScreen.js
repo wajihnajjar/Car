@@ -123,9 +123,13 @@ class HomeScreen extends Component {
                     name="notifications"
                     size={24}
                     color="black"
-                    style={{ marginRight: Sizes.fixPadding * 2.0 }}
+                    style={{ marginRight: Sizes.fixPadding * -12.8 }}
                     onPress={() => this.props.navigation.push('Notifications')}
                 />
+                  <Text
+                    style={{ marginRight: Sizes.fixPadding * 2.0 }}
+                    onPress={() => this.props.navigation.push('Sos')}
+                >🆘</Text>
             </View>
         )
     }
