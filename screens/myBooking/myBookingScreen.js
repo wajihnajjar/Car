@@ -1,51 +1,67 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { SafeAreaView, View, BackHandler, StatusBar, Dimensions, StyleSheet, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
-
-const bookingList = [
-    {
-        id: '1',
-        image: require('../../assets/images/service_provider/provider_1.jpg'),
-        name: 'Perfect Car Wash Services',
-        address: '105, Apple Square, New york',
-        car: 'BMW X7',
-        dateAndTime: '10:00 AM, 20 Feb 2021',
-        services: 'Interier Cleaning, Engine Detailing',
-        isDone: false,
-    },
-    {
-        id: '2',
-        image: require('../../assets/images/service_provider/provider_2.jpg'),
-        name: 'Quicky Car Wash Services',
-        address: '115, Opera Hub, New york',
-        car: 'Mercedes E Class',
-        dateAndTime: '04:00 PM, 30 March 2021',
-        services: 'Body Wash',
-        isDone: true,
-    },
-    {
-        id: '3',
-        image: require('../../assets/images/service_provider/provider_3.jpg'),
-        name: 'Speedy Car Services',
-        address: 'G-8, My Honest Hub, New york',
-        car: 'Volvo S90',
-        dateAndTime: '02:00 PM,  02 April 2021',
-        services: 'Body Wash, Interier Cleaning',
-        isDone: false,
-    },
-
+import axios from'axios'
+var bookingList = [
+  
 ];
 
 const { width } = Dimensions.get('screen');
 
 class MyBookingScreen extends Component {
+    
+state = {
+arr:[]
 
+
+}
+    
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
-    }
+/*
+id , 
+image , 
+name , 
+adress , 
+car : vovo 
+:dataandTime
+ serVice ; 
+ isDone ; 
 
+*/
+bookingList=[]
+
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+
+
+        axios.post("http://192.168.18.22:5000/user/getReservation",{user_id:1}).then(res=> {
+var all = {
+id : null  , 
+image: require('../../assets/images/service_provider/provider_1.jpg'),
+service : "" , 
+isDone:true 
+}
+
+for (let i = 0 ; i< res.data.length; i++)
+bookingList.push({
+    id : null  , 
+    image: require('../../assets/images/service_provider/provider_1.jpg'),
+    service : "" , 
+    isDone:true 
+    })
+for (let i = 0  ; i< res.data.length ; i ++){
+bookingList[i].id= res.data[i].mechanic_id
+console.log(res.data[i].reservation.split(",")[2])
+bookingList[i].services = res.data[i].reservation.split(",")[2] 
+bookingList[i].dateAndTime = res.data[i].reservation.split(",")[1] 
+}
+})
+this.setState({
+arr: bookingList
+
+})
+}
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton.bind(this));
     }
@@ -110,7 +126,7 @@ class MyBookingScreen extends Component {
                     activeOpacity={0.9}
                     onPress={() => item.isDone
                         ?
-                        this.props.navigation.push('Rate')
+                        this.props.navigation.push('Rate' ,{id :1})
                         :
                         this.props.navigation.push('BookingDetail')
                     }
@@ -136,9 +152,8 @@ class MyBookingScreen extends Component {
                 contentContainerStyle={{ paddingVertical: Sizes.fixPadding * 2.0 }}
             />
         )
-    }
-
-    header() {
+    } 
+       header() {
         return (
             <View style={styles.headerWrapStyle}>
                 <MaterialIcons name="arrow-back" size={24} color={Colors.blackColor}
