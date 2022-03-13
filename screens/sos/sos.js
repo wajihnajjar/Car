@@ -10,12 +10,15 @@ const carsList = [
         id: '1',
         image: require('../../assets/images/test.jpg'),
         name: '2015 Ford F-450 4x4/Jerr Dan',
+        place : 'tunis',
         number: '28524114',
+
     },
     {
         id: '2',
         image: require('../../assets/images/i.jpg'),
         name: 'MDOT SHA',
+        place: 'sousse',
         number: '90200100',
     }
 ];
@@ -50,7 +53,6 @@ class Sos extends Component {
                 <View style={{ flex: 1 }}>
                     {this.header()}
                     {this.cars()}
-                    {/* {this.addNewCarButton()} */}
                     {this.deleteCarDialog()}
                 </View>
             </SafeAreaView>
@@ -103,18 +105,6 @@ class Sos extends Component {
         this.setState({ cars: newList })
     }
 
-    addNewCarButton() {
-        return (
-            <TouchableOpacity
-                activeOpacity={0.9}
-                onPress={() => this.props.navigation.push('AddNewCar')}
-                style={styles.addNewCarButtonStyle}>
-                <Text style={{ ...Fonts.blackColor16Bold }}>
-                    Add new car
-                </Text>
-            </TouchableOpacity>
-        )
-    }
 
     cars() {
         const renderItem = ({ item }) => (
@@ -125,17 +115,21 @@ class Sos extends Component {
                         style={{ width: 80.0, height: 80.0, borderRadius: Sizes.fixPadding }}
                     />
                     <View style={{ marginLeft: Sizes.fixPadding, }}>
-                        <Text style={{ ...Fonts.blackColor18Bold, width: width / 1.9, }}>
-                            {item.name}
+                    <Text style={{ ...Fonts.blackColor18Bold, width: width / 1.9, }}>
+                            Place : {item.place}
                         </Text>
+                        <Text style={{ ...Fonts.blackColor18Bold, width: width / 1.9, }}>
+                            Car : {item.name}
+                        </Text>
+                    
                         <Text style={{ ...Fonts.grayColor16Medium, marginTop: Sizes.fixPadding }}>
-                            {item.number}
+                           Number : {item.number}
                         </Text>
                     </View>
                 </View>
-                {/* <MaterialIcons name="delete-forever" size={24} color={Colors.primaryColor}
-                    onPress={() => this.setState({ isDeleteCarDialog: true, deleteCarId: item.id })}
-                /> */}
+                <MaterialIcons name="rate-review" size={24} color={Colors.primaryColor}
+                    onPress={() =>  this.props.navigation.push("Feedback")}
+                />
             </View>
         )
         return (
