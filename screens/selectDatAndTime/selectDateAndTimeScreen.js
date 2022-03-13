@@ -7,9 +7,7 @@ import { TransitionPresets } from 'react-navigation-stack';
 import CalendarStrip from 'react-native-calendar-strip';
 
 const { width } = Dimensions.get('screen');
-
 const slots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM"];
-
 class SelectDateAndTimeScreen extends Component {
 
     componentDidMount() {
@@ -105,7 +103,7 @@ class SelectDateAndTimeScreen extends Component {
                 datesBlacklist={this.datesBlacklistFunc}
                 disabledDateNameStyle={{ ...Fonts.grayColor14Medium }}
                 disabledDateNumberStyle={{ ...Fonts.grayColor14Medium }}
-                useIsoWeekday={false}
+                useIsoWeekday={true}
             />
         )
     }
@@ -133,11 +131,35 @@ class SelectDateAndTimeScreen extends Component {
             </TouchableOpacity>
         )
     }
-
+leap =(x) => {
+var y= parseInt(x)
+if(y%4==0 &&( y%100!==0 || y%400==0) ) 
+return true 
+return false 
+}
+// leap year means that feb has 29 
+// else has 28
     datesBlacklistFunc = date => {
-        return date.isoWeekday() === 7;
-    }
+    
+    var r =( date.toDate().toString())
+    var d  = new Date()
+    console.log("**********************")
+    console.log(d.getMonth())
+    console.log(d.getDate())
+    console.log(d.getFullYear())
+var month = date.months()
+var year = (date.years())
+var day = (date.date())
+console.log(date.toDate().getDate(),"Helo") 
+var dateNow = d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate() 
+var dateUser  = year + '-'+ month + '-'+ day
+ console.log(dateNow," " , dateUser)
 
+var shownBefore = true 
+
+
+        return (date.isoWeekday() === 7 || !shownBefore )
+    }
     header() {
         return (
             <View style={styles.headerWrapStyle}>

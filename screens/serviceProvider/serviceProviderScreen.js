@@ -1,5 +1,5 @@
 import React, { Component , useEffect } from "react";
-import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, AsyncStorage,  Linking , ScrollView, FlatList, Image, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, AsyncStorage,  Linking , ScrollView, FlatList, Image, Text, TouchableOpacity, Alert } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import CollapsingToolbar from "../../components/sliverAppBarScreen";
 import MapView, { Marker } from "react-native-maps";
 import { Snackbar } from "react-native-paper";
 import axios from "axios";
+import { TextInput } from "react-native-gesture-handler";
 
 var reviewsList = [
     {
@@ -42,9 +43,7 @@ var reviewsList = [
         rating: 3,
     }
 ];
-
 var r =[]
-
 const servicesList = [
     {
         id: '1',
@@ -99,7 +98,8 @@ class ServiceProviderScreen extends Component {
         servicesData: servicesList,
         showSnackBar: false,
         isFavorite: false,
-        arr:[]
+        arr:[] , 
+        work : ''
     }
 
     render() {
@@ -128,21 +128,28 @@ class ServiceProviderScreen extends Component {
                                 onPress={ async () => {this.setState({ showSnackBar: true, isFavorite: !this.state.isFavorite })
                               await AsyncStorage.getItem("user_id") .then(res=> { 
 console.log("this is the result ", res )
- axios.post("http://192.168.22.165:5000/user/addFavorite" ,{user_id: res,  mechanic_id:  this.item.mechanic_id})
-
-
+ axios.post("http://192.168.159.22:5000/user/addFavorite" ,{user_id: res,  mechanic_id:  this.item.mechanic_id})
 
                               })
-
-
-                             // Take The User_id From local Storage and then post request to fav and update it 
-                    
+                             // Take The User_id From local Storage and then post request to fav and update it                     
                             }}
                             />
+                            <View onPress={()=> {
+                                console.log("Test")
+                                Alert.alert("Image Clicked")
+                            }}>
+                                        <TouchableOpacity  onPress={()=> {
+this.props.navigation.push("Location")
+
+}}>
+
                             <Image
                                 source={require('../../assets/images/direction.png')}
                                 style={{ width: 20.0, height: 20.0, }}
-                            />
+                             />
+                                     </TouchableOpacity>
+
+                            </View>
                             <MaterialIcons name="phone" size={24} color={Colors.whiteColor} onPress={()=> { 
 
 let phoneNumber = '';
@@ -216,7 +223,7 @@ Linking.openURL(phoneNumber);
     }
   async componentDidMount(){ 
     var x= this.item.mechanic_id 
-    await axios.post("http://192.168.22.165:5000/user/getReview", {mechanic_id:x}).then(res=> {
+    await axios.post("http://192.168.159.22:5000/user/getReview", {mechanic_id:x}).then(res=> {
         var length = (res.data[0].reviews.split(",")).length
         console.log(length)
         console.log(length)
@@ -227,10 +234,12 @@ Linking.openURL(phoneNumber);
        image : require('../../assets/images/user/user_3.jpg') , 
        name :"" , 
        date: "20 fivrer" , 
-       review : ""
+       review : "" , 
+       rating : 0 , 
         }
-        a.name = (x[i].split(':'))[0]
-        a.review = ((x[i].split(':'))[1])
+        a.name = ((x[i].split(':'))[0]).split("@")[0]
+        a.review = (((x[i].split(':'))[1])).split("@")[0]
+        a.rating=parseInt(x[i].split("@")[1])
         r.push(a)
     }
         })        
@@ -409,14 +418,42 @@ Linking.openURL(phoneNumber);
         return total;
     }
 
-    bookNowButton() {
+      bookNowButton() {
         return (
             <TouchableOpacity
                 activeOpacity={0.9}
-                onPress={() => this.props.navigation.push('SelectCar')}
+                onPress={() => { 
+                    console.log(this.item)
+                    var work = ""
+                    for (let i = 0 ; i< servicesList.length; i ++){ 
+  if(servicesList[i].isSelected){
+  work+=servicesList[i].service+" "
+  }
+  work +=this.state.work
+
+                    }
+                    
+                     AsyncStorage.getItem("user_id").then(async (res)=> {
+            await axios.post("http://192.168.159.22:5000/user/addReservation", {
+          mechanic_id : this.item.mechanic_id , 
+          user_id : res , 
+          work : work  , 
+
+
+            }).then(rez=> {
+
+               console.log("Reservation Added")
+
+
+            })
+
+
+                   })
+                    
+                    alert("Your Request Has Been Sent Waiting for Response")}}
                 style={styles.bookNowButtonStyle}>
                 <Text style={{ ...Fonts.whiteColor18Bold }}>
-                    Book now (${`${this.totalAmount()}`})
+                    Book now 
                 </Text>
             </TouchableOpacity>
         )
@@ -462,6 +499,10 @@ Linking.openURL(phoneNumber);
                         </View> :
                         null
                 }
+                <TextInput
+                 value = {this.state.work}
+                
+                />
             </TouchableOpacity>
         )
         return (

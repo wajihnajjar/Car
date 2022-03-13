@@ -8,10 +8,8 @@ import { NavigationEvents } from 'react-navigation';
 import MenuDrawer from 'react-native-side-drawer';
 import Dialog from "react-native-dialog";
 import axios from 'axios'
-
+import * as Location from 'expo-location';
 var markers = [
-
-
     
 
 
@@ -27,8 +25,14 @@ class HomeScreen extends Component {
         super(props);
         this.springValue = new Animated.Value(100);
     }
+    state = {
+        username: "",
+    }    
 
-    componentDidMount() {
+async     componentDidMount() {
+
+        await  this.getdata()
+
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
     }
 
@@ -41,10 +45,30 @@ class HomeScreen extends Component {
         return true;
     };
 
+    async getdata() {
+        await AsyncStorage.getItem("user_id").then(res=> { 
+   
+         axios
+         .post("http://192.168.159.22:5000/user/getOnlyOneUser" , {user_id: res})
+         .then((res1) => {
+   console.log(res1.data)
+   this.setState({
+   username : res1.data[0].username
+   })
+   })
+         .catch((err) => {
+           console.log(err, "===================================>");
+         });
+   
+        })
+       
+       
+     }
+   
     _spring() {
         this.setState({ backClickCount: 1 }, () => {
             Animated.sequence([
-                Animated.spring(
+                Animated.spring(    
                     this.springValue,
                     {
                         toValue: -.05 * height,
@@ -120,9 +144,13 @@ class HomeScreen extends Component {
                     name="notifications"
                     size={24}
                     color="black"
-                    style={{ marginRight: Sizes.fixPadding * 2.0 }}
+                    style={{ marginRight: Sizes.fixPadding * -6.8 }}
                     onPress={() => this.props.navigation.push('Notifications')}
                 />
+                    <Text
+                    style={{ marginRight: Sizes.fixPadding * 2.0 }}
+                    onPress={() => this.props.navigation.push('Sos')}
+                >🆘</Text>
             </View>
         )
     }
@@ -136,7 +164,7 @@ class HomeScreen extends Component {
                     marginBottom: Sizes.fixPadding * 3.0
                 }}>
                     <Image
-                        source={require('../../assets/images/user.jpg')}
+                        source={{uri:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.vectorstock.com%2Fi%2F1000x1000%2F17%2F61%2Fmale-avatar-profile-picture-vector-10211761.jpg"}}
                         style={{
                             width: 100.0,
                             height: 100.0,
@@ -144,7 +172,8 @@ class HomeScreen extends Component {
                         }}
                     />
                     <Text style={{ ...Fonts.blackColor14Regular, marginTop: Sizes.fixPadding, marginBottom: Sizes.fixPadding - 5.0 }}>
-                        Hamid kacem
+{this.state.username}
+
                     </Text>
                     <TouchableOpacity
                         activeOpacity={0.9}
@@ -312,12 +341,25 @@ const NearestPlaces = ({ props }) => {
 
     useEffect( () => {
 
-_storeData = async ()=> {
-await AsyncStorage.setItem("user_id","1")
-}
-_storeData()
-       
-         function deg2rad(deg) {
+ var lat = 0 
+ var long = 0 
+ _GetCord =  async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              setErrorMsg('Permission to access location was denied');
+              setchange(true)
+              setchange2(false)
+              return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            console.log(location.coords)
+            lat = location.coords.latitude 
+            long = location.coords.longitude
+          }
+
+
+
+function deg2rad(deg) {
             return deg * (Math.PI/180)
           }
           
@@ -347,13 +389,16 @@ return [latitude , longitude]
             }
         async  function  fetchData(){
             var arr =[]
-            await axios.get("http://192.168.22.165:5000/admin/getAllMechanic").then(res=> {
+           await _GetCord()
+            await axios.get("http://192.168.159.22:5000/admin/getAllMechanic").then(res=> {
             console.log(res.data.length)
+
           for (let i = 0 ; i< res.data.length ; i++)
           markers.push({ coordinate: {
             latitude: 0,
             longitude: 0,
         },
+        image : ""  ,
         place: '',
         address: '',
         rating: 0,
@@ -364,20 +409,28 @@ return [latitude , longitude]
                 console.log(res.data[i])
                 markers[i].mechanic_id = res.data[i].mechanic_id       
              markers[i].place= res.data[i].namePlace ; 
-                 markers[i].address=res.data[i].address 
+                 markers[i].address=res.data[i].address  ;  
+                 markers[i].image =  res.data[i].img
                   var latitude = res.data[i].cordinate.substr(0,res.data[i].cordinate.substr(0,res.data[i].cordinate.indexOf(" "))) ; 
                   var longitude = res.data[i].cordinate.substr(res.data[i].cordinate.indexOf(' ')+1) 
                   markers[i].coordinate.latitude = parseFloat(latitude) 
                   markers[i].coordinate.longitude = parseFloat(longitude) 
+                  
                   var rate = (((res.data[i].stars/res.data[i].peopleCount).toFixed(2)))
+                  rate= 0
                   markers[i].rating = rate 
                   markers[i].count = res.data[i].peopleCount
                   console.log(markers[i].count)
                    markers[i].peopleCount = res.data[i].peopleCount
-                  markers[i].distance = (calcDistance(parseFloat(latitude) , parseFloat(longitude),36.8800831  , 10.1927499)).toFixed(2)
+                  markers[i].distance = (calcDistance(parseFloat(latitude) , parseFloat(longitude),lat  , long)).toFixed(2)
                 markers[i].phone = res.data[i].phone
                   var x=  Math.floor(Math.random()*100) 
             }
+            markerList.sort(function(a,b){ 
+         return (b.rating-a.rating) + (a.distance-b.distance)
+
+
+            })
          }).catch(err=> { 
                 console.log(err)
             })
@@ -503,7 +556,7 @@ return [latitude , longitude]
                             style={styles.nearestPlacesWrapStyle}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: Sizes.fixPadding + 7.0 }}>
                                 <Image
-                                    source={marker.image}
+                                    source={{uri:marker.image}}
                                     style={{
                                         width: 51.0,
                                         height: 51.0,
@@ -540,12 +593,7 @@ return [latitude , longitude]
                                     </Text>
                                 </View>
                                 <View>
-                                    <Text style={{ ...Fonts.grayColor12Regular, }}>
-                                        Cost
-                                    </Text>
-                                    <Text style={{ ...Fonts.blackColor14Bold }}>
-                                        ${marker.cost}
-                                    </Text>
+                                   
                                 </View>
                                 <View style={styles.bookNowButtonStyle}>
                                     <Text style={{ ...Fonts.blackColor12Regular }}>
