@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-// import {
-//   GoogleSignin,
-//   GoogleSigninButton,
-//   statusCodes,
-// } from "react-native-google-signin";
+
 import {
   Text,
   View,
@@ -27,6 +23,7 @@ import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { NavigationEvents } from "react-navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -88,7 +85,7 @@ class LoginScreen extends Component {
 
   login() {
     axios
-      .post("http://192.168.22.206:5000/user/login", {
+      .post("http://192.168.1.123:5000/user/login", {
         email: this.state.email,
         password: this.state.password,
       })
@@ -132,7 +129,7 @@ class LoginScreen extends Component {
       if (result.type === "success") {
         console.log(result.accessToken);
         axios
-          .post("http://192.168.22.225:5000/user/googleSignIn", {
+          .post("http://192.168.1.123:5000/user/googleSignIn", {
             email: result.user.email,
             username: result.user.name,
             photoUrl: result.user.photoUrl,
@@ -300,9 +297,10 @@ class LoginScreen extends Component {
   loginWithFacebookButton() {
     return (
       <View style={styles.loginWithFacebookButtonStyle}>
-        <Image
-          source={require("../../assets/images/facebook.png")}
-          style={{ height: 37.0, width: 37.0 }}
+        <MaterialIcons
+         name='facebook'
+          // source={require("../../assets/images/facebook.png")}
+          style={{ height: 37.0, width: 37.0  ,color: 'white'}}
           resizeMode="cover"
         />
         <Text
@@ -415,9 +413,8 @@ const styles = StyleSheet.create({
   },
   loginWithFacebookButtonStyle: {
     borderRadius: Sizes.fixPadding * 2.0,
-    alignItems: "center",
     justifyContent: "center",
-    marginTop: Sizes.fixPadding * 6.0,
+    marginTop: Sizes.fixPadding * 25.0,
     marginBottom: Sizes.fixPadding * 2.5,
     backgroundColor: "#3B5998",
     flexDirection: "row",

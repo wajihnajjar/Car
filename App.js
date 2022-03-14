@@ -27,6 +27,7 @@ import notificationsScreen from "./screens/notifications/notificationsScreen";
 import myAddressesScreen from "./screens/myAddresses/myAddressesScreen";
 import addNewAddressScreen from "./screens/addNewAddress/addNewAddressScreen";
 import sos from "./screens/sos/sos";
+import feedback from "./screens/sos/feedback"
 // import notifcationmap from "./screens/home/map";
 // pulling
 const switchNavigator = createSwitchNavigator(
@@ -58,6 +59,7 @@ const switchNavigator = createSwitchNavigator(
       MyAddresses: myAddressesScreen,
       AddNewAddress: addNewAddressScreen,
       Sos: sos,
+      Feedback : feedback ,
       // Notifcationmap : notifcationmap,
     }),
   },

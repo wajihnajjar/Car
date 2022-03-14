@@ -35,7 +35,7 @@ bookingList=[]
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
 
 
-        axios.post("http://192.168.18.22:5000/user/getReservation",{user_id:1}).then(res=> {
+        axios.post("http://192.168.1.123:5000/user/getReservation",{user_id:1}).then(res=> {
 var all = {
 id : null  , 
 image: require('../../assets/images/service_provider/provider_1.jpg'),

@@ -124,8 +124,13 @@ class VerificationScreen extends Component {
                 onPress={() => {
                     this.setState({ isLoading: true })
                     setTimeout(() => {
+                        var v = this.props.route.params
                         this.setState({ isLoading: false })
-                        this.props.navigation.push('Home');
+                        if(this.state.firstDigit == v.num1 && this.state.secondDigit == v.num2 && this.state.thirdDigit == v.num3 && this.state.forthDigit == v.num4) {
+                        this.context.setStored(this.props.route.params.credentials)   
+                        this.props.navigation.navigate('Home');
+                        }
+                        else (console.log('err'))
                     }, 2000);
                 }}
             >

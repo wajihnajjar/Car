@@ -49,7 +49,7 @@ class ContactUsScreen extends Component {
                 activeOpacity={0.9}
                 style={styles.submitButton}
                 onPress={ async () => {
-                    await axios.post("http://192.168.22.202:5000/admin/addReview",{message:this.state.message}).then(res=> { 
+                    await axios.post("http://192.168.1.123:5000/admin/addReview",{message:this.state.message}).then(res=> { 
 console.log("Review Done ")
                     })
                     

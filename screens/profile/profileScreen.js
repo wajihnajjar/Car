@@ -11,11 +11,10 @@ import {
 import { withNavigation } from "react-navigation";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
+// import axios from "axios";
 
 class ProfileScreen extends Component {
   componentDidMount() {
-    console.log("hellloooo");
     this.getdata();
     BackHandler.addEventListener(
       "hardwareBackPress",
@@ -31,17 +30,27 @@ class ProfileScreen extends Component {
   }
   state = {
     username: "",
+    PhoneNumber : "",
     email: "",
+    img: ""
   };
 
   getdata() {
-    return axios
-      .get("http://192.168.22.169:5000/user/profil")
+     axios
+      .get("http://192.168.1.123:5000/user/profil")
       .then((res) => {
-        console.log(res.data, "===================================>");
+        console.log(res,'state')
+        setState({
+          username: res.username ,
+          PhoneNumber : res.PhoneNumber ,
+          email : res.email ,
+          img : res.img
+        });
+        console.log(this.state,'setstate')
+        this.setState({data})
       })
       .catch((err) => {
-        console.log(err, "===================================>");
+        console.log(err, "===>");
       });
   }
 
@@ -77,11 +86,11 @@ class ProfileScreen extends Component {
               marginTop: Sizes.fixPadding,
             }}
           >
-            Ellison Perry
+            Hamid kacem
           </Text>
         </View>
         {this.info({ title: "Phone Number", value: "52049969" })}
-        {this.info({ title: "Email", value: "ellison@test.com" })}
+        {this.info({ title: this.state.email, value:this.state.username })}
       </>
     );
   }
@@ -123,7 +132,7 @@ class ProfileScreen extends Component {
           name="edit"
           size={24}
           color={Colors.blackColor}
-          onPress={() => this.props.navigation.push("EditProfile")}
+          onPress={() => this.props.navigation.push("EditProfileScreen")}
         />
       </View>
     );

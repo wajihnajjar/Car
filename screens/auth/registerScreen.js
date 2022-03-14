@@ -142,6 +142,7 @@ class RegisterScreen extends Component {
           this.state.password;
           console.log(this.state.password);
         }}
+        
         style={styles.textFieldWrapStyle}
         secureTextEntry={true}
         onChangeText={(text) => this.setState({ password: text })}
@@ -168,18 +169,33 @@ class RegisterScreen extends Component {
   }
   numberTextField() {
     return (
+      // <IntlPhoneInput
+      //   defaultCountry="TN"
+      //   value={this.state.number}
+      //   onChange={() => {
+      //     this.state.number;
+      //     console.log(this.state.number);
+      //   }}
+      //   style={styles.textFieldWrapStyle}
+      //   onChangeText={(text) => this.setState({ number: text })}
+      //   placeholder="Your Number"
+      //   placeholderTextColor="white"
+      // />
       <IntlPhoneInput
-        defaultCountry="TN"
-        value={this.state.number}
-        onChange={() => {
-          this.state.number;
-          console.log(this.state.number);
-        }}
-        style={styles.textFieldWrapStyle}
-        onChangeText={(text) => this.setState({ number: text })}
-        placeholder="Your Number"
-        placeholderTextColor="white"
-      />
+      defaultCountry="TN"
+      onChangeText={({ phoneNumber }) => this.setState({ phoneNumber: phoneNumber })}
+      phoneInputStyle={{ flex: 1, ...Fonts.whiteColor14Medium, marginLeft: Sizes.fixPadding }}
+      placeholder="Phone Number"
+      placeholderTextColor="white"
+
+      containerStyle={{
+          backgroundColor: 'rgba(203, 189, 189, 0.73)',
+          borderRadius: Sizes.fixPadding * 2.0,
+          height: 60.0,
+          // marginTop: Sizes.fixPadding * 2.0
+          
+      }}
+  />
     );
   }
 
@@ -244,6 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(203, 189, 189, 0.73)",
     borderRadius: Sizes.fixPadding * 2.0,
     marginBottom: Sizes.fixPadding * 2.5,
+    marginTop: Sizes.fixPadding * 2.0,
     ...Fonts.whiteColor14Medium,
   },
   continueButtonStyle: {

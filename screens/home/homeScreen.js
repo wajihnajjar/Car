@@ -372,7 +372,7 @@ return [latitude , longitude]
         async  function  fetchData(){
             var arr =[]
            await _GetCord()
-            await axios.get("http://192.168.18.22:5000/admin/getAllMechanic").then(res=> {
+            await axios.get("http://192.168.11.65:5000/admin/getAllMechanic").then(res=> {
             console.log(res.data.length)
 
           for (let i = 0 ; i< res.data.length ; i++)
