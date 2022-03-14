@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.17",
+    "@react-native-community/datetimepicker": "^6.0.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/picker": "^1.8.1",
     "@react-native-google-signin/google-signin": "^7.1.0",
@@ -34,6 +35,8 @@
     "react-native-animated-spinkit": "^1.5.2",
     "react-native-base64": "^0.2.1",
     "react-native-calendar-strip": "^2.2.5",
+    "react-native-date-picker": "^4.2.0",
+    "react-native-datepicker": "^1.7.2",
     "react-native-dialog": "^9.2.1",
     "react-native-elements": "^3.4.2",
     "react-native-file-type": "^1.0.0",
@@ -54,8 +57,7 @@
     "react-navigation": "^4.4.4",
     "react-navigation-shared-element": "^2.3.1",
     "react-navigation-stack": "^2.10.4",
-    "run-ios": "^0.4.0",
-    "expo-location": "^13.0.4"
+    "run-ios": "^0.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

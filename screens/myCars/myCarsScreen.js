@@ -144,14 +144,14 @@ class MyCarsScreen extends Component {
         onPress={() => this.props.navigation.push("AddNewCar")}
         style={styles.addNewCarButtonStyle}
       >
-        <Text style={{ ...Fonts.blackColor16Bold }}>Add new car</Text>
+        <Text style={{ ...Fonts.blackColor16Bold }}>Add new reminder</Text>
       </TouchableOpacity>
     );
   }
 
   addReminder() {
     axios
-      .get("http://192.168.1.200:5000/user/getreminder")
+      .get("http://172.20.10.4:5000/user/getreminder")
       .then((response) => this.setState({ data: response.data }))
       .catch((err) => {
         console.log(err);
@@ -160,7 +160,7 @@ class MyCarsScreen extends Component {
 
   deleteReminder(id) {
     axios
-      .delete(`http://192.168.1.200:5000/user/delreminder/${id}`)
+      .delete(`http://172.20.10.4:5000/user/delreminder/${id}`)
       .then(({ data }) => console.log(data, "deleted done"))
       .catch((err) => {
         console.log(err);
@@ -233,7 +233,7 @@ class MyCarsScreen extends Component {
             marginLeft: Sizes.fixPadding + 5.0,
           }}
         >
-          My Cars
+          My Reminders
         </Text>
       </View>
     );
