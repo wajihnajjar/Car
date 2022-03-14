@@ -144,12 +144,10 @@ async     componentDidMount() {
                     name="notifications"
                     size={24}
                     color="black"
-
                     style={{ marginRight: Sizes.fixPadding * -6.8 }}
                     onPress={() => this.props.navigation.push('Notifications')}
                 />
                     <Text
-
                     style={{ marginRight: Sizes.fixPadding * 2.0 }}
                     onPress={() => this.props.navigation.push('Sos')}
                 >🆘</Text>
