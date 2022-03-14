@@ -89,7 +89,7 @@ class LoginScreen extends Component {
 
   login() {
     axios
-      .post("http://192.168.22.206:5000/user/login", {
+      .post("http://192.168.159.22:5000/user/login", {
         email: this.state.email,
         password: this.state.password,
       })
@@ -133,7 +133,7 @@ class LoginScreen extends Component {
       if (result.type === "success") {
         console.log(result.accessToken);
         axios
-          .post("http://192.168.22.225:5000/user/googleSignIn", {
+          .post("http://192.168.159.22:5000/user/googleSignIn", {
             email: result.user.email,
             username: result.user.name,
             photoUrl: result.user.photoUrl,
@@ -376,7 +376,7 @@ class LoginScreen extends Component {
     return (
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={() => {
+        onPress={ async () => {
           if (!this.state.email || !this.state.password) {
             alert("put all info");
             this.props.navigation.navigate("Home");
@@ -386,6 +386,11 @@ class LoginScreen extends Component {
             } else if (format.test(this.state.password) !== true) {
               alert("Password must includes Uppercase and Symboles");
             } else {
+   axios.post("http://192.168.159.22:5000/user/getIdUser"  , {
+email : this.state.email 
+   }) . then( async (res)=> { 
+  await AsyncStorage.setItem("user_id" , res.data[0].user_id.toString())
+   } )
               this.login();
             }
           }

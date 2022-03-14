@@ -255,7 +255,9 @@ class AddNewCarScreen extends Component {
 
   addReminder() {
     axios
-      .post("http://172.20.10.4:5000/user/reminder", {
+
+      .post("http://192.168.159.22:5000/user/reminder", {
+
         vehicleLicenseExpiry: this.state.vehicleLicenseExpiry,
         insuranceExpiry: this.state.insuranceExpiry,
         technicalVisit: this.state.technicalVisit,
