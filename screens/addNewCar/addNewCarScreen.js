@@ -17,6 +17,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { BottomSheet } from "react-native-elements";
 import { TransitionPresets } from "react-navigation-stack";
 import * as ImagePicker from "expo-image-picker";
+import DatePicker from "react-native-datepicker";
 import axios from "axios";
 
 const colorsList = [
@@ -66,10 +67,11 @@ class AddNewCarScreen extends Component {
     selectedCarColorId: colorsList[0].id,
     vehicleLicenseExpiry: "",
     insuranceExpiry: "",
-    technicalVisit: "",
+    technicalVisit: "09-10-2020",
+    date: "09-10-2020",
     image: "",
     showBottomSheet: false,
-    image:""
+    image: "",
   };
 
   render() {
@@ -79,122 +81,122 @@ class AddNewCarScreen extends Component {
         <View style={{ flex: 1 }}>
           {this.header()}
           <ScrollView showsVerticalScrollIndicator={false}>
-            {this.cameraSelection()}
+            {/* {this.cameraSelection()} */}
             {this.carBrandNameTextField()}
             {this.carModelTextField()}
-            {this.carNumberTextField()}
+            {/* {this.carNumberTextField()} */}
             {/* {this.carImageField()} */}
-            {this.selectColorInfo()}
+            {/* {this.selectColorInfo()} */}
             {this.addCarButton()}
           </ScrollView>
-          {this.addNewCarBottomSheet()}
+          {/* {this.addNewCarBottomSheet()} */}
         </View>
       </SafeAreaView>
     );
   }
 
-  addNewCarBottomSheet() {
-    const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
+  // addNewCarBottomSheet() {
+  //   const pickImage = async () => {
+  //     // No permissions request is necessary for launching the image library
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //       allowsEditing: true,
+  //       aspect: [4, 3],
+  //       quality: 1,
+  //     });
 
-      console.log(result);
+  //     console.log(result);
 
-      if (!result.cancelled) {
-        setImage(result.uri);
-      }
-    };
+  //     if (!result.cancelled) {
+  //       setImage(result.uri);
+  //     }
+  //   };
 
-    const openCamera = async () => {
-      // Ask the user for the permission to access the camera
-      const permissionResult =
-        await ImagePicker.requestCameraPermissionsAsync();
+  //   const openCamera = async () => {
+  //     // Ask the user for the permission to access the camera
+  //     const permissionResult =
+  //       await ImagePicker.requestCameraPermissionsAsync();
 
-      if (permissionResult.granted === false) {
-        alert("You've refused to allow this appp to access your camera!");
-        return;
-      }
+  //     if (permissionResult.granted === false) {
+  //       alert("You've refused to allow this appp to access your camera!");
+  //       return;
+  //     }
 
-      const result = await ImagePicker.launchCameraAsync();
+  //     const result = await ImagePicker.launchCameraAsync();
 
-      // Explore the result
-      console.log(result);
+  //     // Explore the result
+  //     console.log(result);
 
-      if (!result.cancelled) {
-        setPhoto(result.uri);
-        console.log(result.uri);
-      }
-    };
-    return (
-      <BottomSheet
-        isVisible={this.state.showBottomSheet}
-        containerStyle={{ backgroundColor: "rgba(0.5, 0.50, 0, 0.50)" }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => this.setState({ showBottomSheet: false })}
-          style={styles.bottomSheetWrapStyle}
-        >
-          <Text style={{ ...Fonts.blackColor18Bold, textAlign: "center" }}>
-            Choose Option
-          </Text>
-          <View style={styles.bottomSheetDividerStyle} />
-          <View
-            style={{
-              flexDirection: "row",
-              marginHorizontal: Sizes.fixPadding * 2.0,
-            }}
-          >
-            <MaterialIcons
-              name="photo-camera"
-              size={24}
-              color={Colors.blackColor}
-            />
-            <Text
-              onPress={() => {
-                openCamera();
-              }}
-              style={{
-                ...Fonts.blackColor16Medium,
-                marginLeft: Sizes.fixPadding,
-              }}
-            >
-              Camera
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: Sizes.fixPadding + 2.0,
-              marginHorizontal: Sizes.fixPadding * 2.0,
-            }}
-          >
-            <MaterialIcons
-              name="photo-album"
-              size={24}
-              color={Colors.blackColor}
-            />
-            <Text
-              onPress={() => {
-                pickImage();
-              }}
-              style={{
-                ...Fonts.blackColor16Medium,
-                marginLeft: Sizes.fixPadding,
-              }}
-            >
-              Choose from gallery
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </BottomSheet>
-    );
-  }
+  //     if (!result.cancelled) {
+  //       setPhoto(result.uri);
+  //       console.log(result.uri);
+  //     }
+  //   };
+  //   return (
+  //     <BottomSheet
+  //       isVisible={this.state.showBottomSheet}
+  //       containerStyle={{ backgroundColor: "rgba(0.5, 0.50, 0, 0.50)" }}
+  //     >
+  //       <TouchableOpacity
+  //         activeOpacity={0.9}
+  //         onPress={() => this.setState({ showBottomSheet: false })}
+  //         style={styles.bottomSheetWrapStyle}
+  //       >
+  //         <Text style={{ ...Fonts.blackColor18Bold, textAlign: "center" }}>
+  //           Choose Option
+  //         </Text>
+  //         <View style={styles.bottomSheetDividerStyle} />
+  //         <View
+  //           style={{
+  //             flexDirection: "row",
+  //             marginHorizontal: Sizes.fixPadding * 2.0,
+  //           }}
+  //         >
+  //           <MaterialIcons
+  //             name="photo-camera"
+  //             size={24}
+  //             color={Colors.blackColor}
+  //           />
+  //           <Text
+  //             onPress={() => {
+  //               openCamera();
+  //             }}
+  //             style={{
+  //               ...Fonts.blackColor16Medium,
+  //               marginLeft: Sizes.fixPadding,
+  //             }}
+  //           >
+  //             Camera
+  //           </Text>
+  //         </View>
+  //         <View
+  //           style={{
+  //             flexDirection: "row",
+  //             marginTop: Sizes.fixPadding + 2.0,
+  //             marginHorizontal: Sizes.fixPadding * 2.0,
+  //           }}
+  //         >
+  //           <MaterialIcons
+  //             name="photo-album"
+  //             size={24}
+  //             color={Colors.blackColor}
+  //           />
+  //           <Text
+  //             onPress={() => {
+  //               pickImage();
+  //             }}
+  //             style={{
+  //               ...Fonts.blackColor16Medium,
+  //               marginLeft: Sizes.fixPadding,
+  //             }}
+  //           >
+  //             Choose from gallery
+  //           </Text>
+  //         </View>
+  //       </TouchableOpacity>
+  //     </BottomSheet>
+  //   );
+  // }
 
   addCarButton() {
     return (
@@ -203,57 +205,57 @@ class AddNewCarScreen extends Component {
         onPress={this.addReminder.bind(this)}
         style={styles.addCarButtonStyle}
       >
-        <Text style={{ ...Fonts.whiteColor18Bold }}>Add Car</Text>
+        <Text style={{ ...Fonts.whiteColor18Bold }}>Add</Text>
       </TouchableOpacity>
     );
   }
 
-  selectColorInfo() {
-    const renderItem = ({ item }) => (
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={() => this.setState({ selectedCarColorId: item.id })}
-        style={{
-          backgroundColor: item.color,
-          ...styles.displayColorStyle,
-        }}
-      >
-        {this.state.selectedCarColorId == item.id ? (
-          <MaterialIcons
-            name="check"
-            size={24}
-            color={
-              item.color == "#ffffff" || item.color == "#FFFFFF"
-                ? Colors.blackColor
-                : Colors.whiteColor
-            }
-          />
-        ) : null}
-      </TouchableOpacity>
-    );
-    return (
-      <View
-        style={{
-          marginHorizontal: Sizes.fixPadding * 2.0,
-          marginTop: Sizes.fixPadding,
-        }}
-      >
-        <Text style={{ ...Fonts.blackColor18Bold }}>Select color</Text>
-        <FlatList
-          data={colorsList}
-          keyExtractor={(item) => `${item.id}`}
-          renderItem={renderItem}
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          contentContainerStyle={{ paddingTop: Sizes.fixPadding }}
-        />
-      </View>
-    );
-  }
+  // selectColorInfo() {
+  //   const renderItem = ({ item }) => (
+  //     <TouchableOpacity
+  //       activeOpacity={0.9}
+  //       onPress={() => this.setState({ selectedCarColorId: item.id })}
+  //       style={{
+  //         backgroundColor: item.color,
+  //         ...styles.displayColorStyle,
+  //       }}
+  //     >
+  //       {this.state.selectedCarColorId == item.id ? (
+  //         <MaterialIcons
+  //           name="check"
+  //           size={24}
+  //           color={
+  //             item.color == "#ffffff" || item.color == "#FFFFFF"
+  //               ? Colors.blackColor
+  //               : Colors.whiteColor
+  //           }
+  //         />
+  //       ) : null}
+  //     </TouchableOpacity>
+  //   );
+  //   return (
+  //     <View
+  //       style={{
+  //         marginHorizontal: Sizes.fixPadding * 2.0,
+  //         marginTop: Sizes.fixPadding,
+  //       }}
+  //     >
+  //       <Text style={{ ...Fonts.blackColor18Bold }}>Select color</Text>
+  //       <FlatList
+  //         data={colorsList}
+  //         keyExtractor={(item) => `${item.id}`}
+  //         renderItem={renderItem}
+  //         showsHorizontalScrollIndicator={false}
+  //         horizontal
+  //         contentContainerStyle={{ paddingTop: Sizes.fixPadding }}
+  //       />
+  //     </View>
+  //   );
+  // }
 
   addReminder() {
     axios
-      .post("http://192.168.1.200:5000/user/reminder", {
+      .post("http://172.20.10.4:5000/user/reminder", {
         vehicleLicenseExpiry: this.state.vehicleLicenseExpiry,
         insuranceExpiry: this.state.insuranceExpiry,
         technicalVisit: this.state.technicalVisit,
@@ -269,22 +271,22 @@ class AddNewCarScreen extends Component {
       });
   }
 
-  carNumberTextField() {
-    return (
-      <TextInput
-        value={this.state.vehicleLicenseExpiry}
-        onChangeText={(text) => this.setState({ vehicleLicenseExpiry: text })}
-        onChange={() => {
-          this.state.vehicleLicenseExpiry;
-          console.log(this.state.vehicleLicenseExpiry);
-        }}
-        selectionColor={Colors.primaryColor}
-        placeholder="Vehicle License Expiry"
-        style={{ ...styles.textFieldStyle, marginTop: Sizes.fixPadding * 2.0 }}
-        placeholderTextColor={Colors.grayColor}
-      />
-    );
-  }
+  // carNumberTextField() {
+  //   return (
+  //     <TextInput
+  //       value={this.state.vehicleLicenseExpiry}
+  //       onChangeText={(text) => this.setState({ vehicleLicenseExpiry: text })}
+  //       onChange={() => {
+  //         this.state.vehicleLicenseExpiry;
+  //         console.log(this.state.vehicleLicenseExpiry);
+  //       }}
+  //       selectionColor={Colors.primaryColor}
+  //       placeholder="Vehicle License Expiry"
+  //       style={{ ...styles.textFieldStyle, marginTop: Sizes.fixPadding * 2.0 }}
+  //       placeholderTextColor={Colors.grayColor}
+  //     />
+  //   );
+  // }
   // carImageField() {
   //   return (
   //     <TextInput
@@ -312,7 +314,7 @@ class AddNewCarScreen extends Component {
           console.log(this.state.insuranceExpiry);
         }}
         selectionColor={Colors.primaryColor}
-        placeholder="Insurance Expiry"
+        placeholder="Put your reminder..."
         style={{ ...styles.textFieldStyle, marginTop: Sizes.fixPadding * 2.0 }}
         placeholderTextColor={Colors.grayColor}
       />
@@ -321,41 +323,76 @@ class AddNewCarScreen extends Component {
 
   carBrandNameTextField() {
     return (
-      <TextInput
-        value={this.state.technicalVisit}
-        onChangeText={(text) => this.setState({ technicalVisit: text })}
-        onChange={() => {
-          this.state.technicalVisit;
-          console.log(this.state.technicalVisit);
-        }}
-        selectionColor={Colors.primaryColor}
-        placeholder="Technical Visit"
-        style={styles.textFieldStyle}
-        placeholderTextColor={Colors.grayColor}
-      />
+      // <TextInput
+      //   value={this.state.technicalVisit}
+      //   onChangeText={(text) => this.setState({ technicalVisit: text })}
+      //   onChange={() => {
+      //     this.state.technicalVisit;
+      //     console.log(this.state.technicalVisit);
+      //   }}
+      //   selectionColor={Colors.primaryColor}
+      //   placeholder="Technical Visit"
+      //   style={styles.textFieldStyle}
+      //   placeholderTextColor={Colors.grayColor}
+      // />
+
+      <SafeAreaView style={styles.container2}>
+        <View style={styles.container2}>
+          <DatePicker
+            value={this.state.technicalVisit}
+            onChangeText={(text) => this.setState({ technicalVisit: text })}
+            onChange={() => {
+              this.state.technicalVisit;
+              console.log(this.state.technicalVisit);
+            }}
+            style={styles.datePickerStyle}
+            date={this.state.technicalVisit} //initial date from state
+            // mode="date" //The enum of date, datetime and time
+            placeholder="select date"
+            format="DD-MM-YYYY"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                //display: 'none',
+                position: "absolute",
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+            }}
+            onDateChange={(date) => {
+              this.setState({ technicalVisit: date });
+            }}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
 
-  cameraSelection() {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.9}
-        onPress={() => this.setState({ showBottomSheet: true })}
-        style={styles.cameraSelectionStyle}
-      >
-        <MaterialIcons
-          name="add-a-photo"
-          size={30}
-          color={Colors.primaryColor}
-        />
-      </TouchableOpacity>
-    );
-  }
+  // cameraSelection() {
+  //   return (
+  //     <TouchableOpacity
+  //       activeOpacity={0.9}
+  //       onPress={() => this.setState({ showBottomSheet: true })}
+  //       style={styles.cameraSelectionStyle}
+  //     >
+  //       <MaterialIcons
+  //         name="add-a-photo"
+  //         size={30}
+  //         color={Colors.primaryColor}
+  //       />
+  //     </TouchableOpacity>
+  //   );
+  // }
 
   header() {
     return (
       <View style={styles.headerWrapStyle}>
-        <Text style={{ ...Fonts.blackColor18Bold }}>Add New Car</Text>
+        <Text style={{ ...Fonts.blackColor18Bold }}>Add New Reminder</Text>
         <MaterialIcons
           name="arrow-back"
           size={24}
@@ -369,6 +406,22 @@ class AddNewCarScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  container2: {
+    flex: 1,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 20,
+  },
+  datePickerStyle: {
+    width: 200,
+    marginTop: 20,
+  },
   headerWrapStyle: {
     height: 50.0,
     backgroundColor: Colors.whiteColor,
