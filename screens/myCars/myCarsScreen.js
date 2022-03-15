@@ -151,8 +151,7 @@ class MyCarsScreen extends Component {
 
   addReminder() {
     axios
-
-      .get("http://192.168.1.146:5000/user/getreminder")
+      .get("http://192.168.1.123:5000/user/getreminder")
       .then((response) => this.setState({ data: response.data }))
       .catch((err) => {
         console.log(err);
@@ -161,8 +160,7 @@ class MyCarsScreen extends Component {
 
   deleteReminder(id) {
     axios
-
-      .delete(`http://192.168.1.146:5000/user/delreminder/${id}`)
+      .delete(`http://192.168.1.123:5000/user/delreminder/${id}`)
       .then(({ data }) => console.log(data, "deleted done"))
       .catch((err) => {
         console.log(err);

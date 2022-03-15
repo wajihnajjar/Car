@@ -27,7 +27,6 @@ import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { NavigationEvents } from "react-navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Icon from "react-native-vector-icons/FontAwesome";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -189,7 +188,7 @@ class LoginScreen extends Component {
         />
         <ImageBackground
           style={{ flex: 1 }}
-          source={require("../../assets/images/black1.jpg")}
+          source={require("../../assets/images/bg.jpg")}
           resizeMode="cover"
         >
           <LinearGradient
@@ -199,16 +198,14 @@ class LoginScreen extends Component {
             style={{ flex: 1, paddingHorizontal: Sizes.fixPadding * 2.0 }}
           >
             <ScrollView showsVerticalScrollIndicator={false}>
+              {this.Logo()}
               {this.welcomeInfo()}
               {this.EmailTextField()}
               {this.PasswordTextField()}
               {this.continueButton()}
-              {/* {this.loginWithFacebookButton()} */}
               {this.registerButton()}
-              {/* {this.loginWithGoogleButton()} */}
-              {/* {this.signUpStatement()} */}
-              {/* {this.orStatement()} */}
-              {this.textStatement()}
+              {this.loginWithGoogleButton()}
+              {this.loginWithFacebookButton()}
             </ScrollView>
           </LinearGradient>
         </ImageBackground>
@@ -236,7 +233,7 @@ class LoginScreen extends Component {
         }}
         defaultCountry="IN"
         onChangeText={(email) => this.setState({ email })}
-        style={styles.textFieldWrapStyle}
+        style={styles.textFieldWrapStyle1}
         placeholder="Email..."
         placeholderTextColor="white"
         dialCodeTextStyle={{
@@ -247,26 +244,11 @@ class LoginScreen extends Component {
           backgroundColor: "rgba(203, 189, 189, 0.73)",
           borderRadius: Sizes.fixPadding * 2.0,
           height: 56.0,
-          marginTop: Sizes.fixPadding * 1.0,
+          marginTop: "25%",
         }}
       />
     );
   }
-
-  // signUpStatement() {
-  //   return (
-  //     <View style={styles.sigup}>
-  //       <Text
-  //         style={{
-  //           ...Fonts.whiteColor14Medium,
-  //         }}
-  //       >
-  //         Don't have account?
-  //       </Text>
-  //     </View>
-  //   );
-  // }
-
   PasswordTextField() {
     return (
       <TextInput
@@ -295,73 +277,52 @@ class LoginScreen extends Component {
     );
   }
 
-  // loginWithGoogleButton() {
-  //   return (
-  //   );
-  // }
-  textStatement() {
+  loginWithGoogleButton() {
     return (
-      <View style={styles.textDeco}>
-        <Text
-          style={{
-            ...Fonts.whiteColor14Medium,
-          }}
-        >
-          ╼ OR continue with ╾
-        </Text>
-      </View>
+      <Text
+        style={{
+          textAlign: "center",
+          marginTop: Sizes.fixPadding * 4.0,
+          ...Fonts.whiteColor18Medium,
+          borderRadius: Sizes.fixPadding * 0.0,
+        }}
+      >
+        Log in with Facebook or Google
+      </Text>
     );
   }
 
-  // loginWithFacebookButton() {
-  //   return (
-  //     <View style={styles.container}>
-  //       <View style={styles.button1}>
-  //         <TouchableOpacity
-  //           style={{
-  //             borderWidth: 1,
-  //             borderColor: "rgba(0,0,0,0.2)",
-  //             alignItems: "center",
-  //             justifyContent: "center",
-  //             width: 55,
-  //             height: 55,
-  //             backgroundColor: "#fff",
-  //             borderRadius: 50,
-  //           }}
-  //         >
-  //           <Icon
-  //             style={styles.iconfb}
-  //             onPress={this.signInWithGoogleAsync}
-  //             name="google"
-  //             size={30}
-  //             color="rgba(253, 153, 2, 0.49)"
-  //           />
-  //         </TouchableOpacity>
-  //       </View>
-  //       <View style={styles.button2}>
-  //         <TouchableOpacity
-  //           style={{
-  //             borderWidth: 1,
-  //             borderColor: "rgba(0,0,0,0.2)",
-  //             alignItems: "center",
-  //             justifyContent: "center",
-  //             width: 55,
-  //             height: 55,
-  //             backgroundColor: "#fff",
-  //             borderRadius: 50,
-  //           }}
-  //         >
-  //           <Icon
-  //             onPress={this.fbLogin}
-  //             name="facebook"
-  //             size={30}
-  //             color="rgba(253, 153, 2, 0.49)"
-  //           />
-  //         </TouchableOpacity>
-  //       </View>
-  //     </View>
-  //   );
-  // }
+  loginWithFacebookButton() {
+    return (
+      <View
+        style={{
+          marginTop: "5%",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <Image
+          source={require("../../assets/images/facebook.png")}
+          style={{ height: 50.0, width: 50.0 }}
+          resizeMode="cover"
+        />
+        <Image
+          source={require("../../assets/images/google.png")}
+          style={{ marginLeft: "20%", height: 50.0, width: 50.0 }}
+          resizeMode="cover"
+        />
+
+        {/* Log in with Facebook or Google */}
+
+        {/* <View style={styles.loginWithGoogleButtonStyle}>
+        <Image
+          source={require("../../assets/images/google.png")}
+          style={{ height: 37.0, width: 37.0 }}
+          resizeMode="cover"
+        /></View> */}
+      </View>
+    );
+  }
 
   otpText() {
     return (
@@ -376,7 +337,7 @@ class LoginScreen extends Component {
     return (
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={ async () => {
+        onPress={async () => {
           if (!this.state.email || !this.state.password) {
             alert("put all info");
             this.props.navigation.navigate("Home");
@@ -386,11 +347,16 @@ class LoginScreen extends Component {
             } else if (format.test(this.state.password) !== true) {
               alert("Password must includes Uppercase and Symboles");
             } else {
-   axios.post("http://192.168.159.22:5000/user/getIdUser"  , {
-email : this.state.email 
-   }) . then( async (res)=> { 
-  await AsyncStorage.setItem("user_id" , res.data[0].user_id.toString())
-   } )
+              axios
+                .post("http://192.168.159.22:5000/user/getIdUser", {
+                  email: this.state.email,
+                })
+                .then(async (res) => {
+                  await AsyncStorage.setItem(
+                    "user_id",
+                    res.data[0].user_id.toString()
+                  );
+                });
               this.login();
             }
           }
@@ -399,7 +365,7 @@ email : this.state.email
         <LinearGradient
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          colors={["rgba(253, 153, 2,1.2)", "#FED700"]}
+          colors={["rgba(209, 185, 2,1.2)", "rgba(253, 198, 2, 0.49)"]}
           style={styles.continueButtonStyle}
         >
           <Text style={{ ...Fonts.whiteColor18Bold }}>Login</Text>
@@ -409,82 +375,16 @@ email : this.state.email
   }
   registerButton() {
     return (
-      <View style={styles.container}>
-        <View>
-          <View style={styles.button1}>
-            <TouchableOpacity
-              style={{
-                borderWidth: 1,
-                borderColor: "rgba(0,0,0,0.2)",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 55,
-                height: 55,
-                backgroundColor: "#fff",
-                borderRadius: 50,
-              }}
-            >
-              <Icon
-                style={styles.iconfb}
-                onPress={this.signInWithGoogleAsync}
-                name="google"
-                size={30}
-                color="rgba(253, 153, 2, 0.49)"
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.button2}>
-            <TouchableOpacity
-              style={{
-                borderWidth: 1,
-                borderColor: "rgba(0,0,0,0.2)",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 55,
-                height: 55,
-                backgroundColor: "#fff",
-                borderRadius: 50,
-              }}
-            >
-              <Icon
-                onPress={this.fbLogin}
-                name="facebook"
-                size={30}
-                color="rgba(253, 153, 2, 0.49)"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.signUp}>
-          <Text
-            onPress={() => {
-              this.props.navigation.navigate("Register");
-            }}
-            // style={styles.registerButton}
-            style={{
-              ...Fonts.whiteColor14Medium,
-            }}
-          >
-            Don't have account? Sign up
-          </Text>
-        </View>
-      </View>
+      <Text
+        style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }}
+        onPress={() => {
+          this.props.navigation.navigate("Register");
+        }}
+      >
+        Register
+      </Text>
     );
   }
-
-  // orStatement() {
-  //   return (
-  //     <View style={styles.or}>
-  //       <Text
-  //         style={{
-  //           ...Fonts.whiteColor14Medium,
-  //         }}
-  //       >
-  //         OR
-  //       </Text>
-  //     </View>
-  //   );
-  // }
 
   welcomeInfo() {
     return (
@@ -498,54 +398,33 @@ email : this.state.email
       </View>
     );
   }
+  Logo() {
+    return (
+      <View style={{marginLeft: "20%" ,marginTop:"20%"}}>
+        <Image
+          style={{  height: 270, width: 270  }}
+          source={require("../../assets/images/Logo1.png")}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    marginTop: Sizes.fixPadding * 5.0,
-    flex: 1,
-    flexDirection: "row",
-    // justifyContent: "space-between",
-  },
-  button1: {
-    // marginTop : Sizes.fixPadding * 2.0,
-    // flexDirection: "row",
-
-    // : "cenalignItemster",
-    // // marginTop: Sizes.fixPadding * 8.0,
-    // marginLeft: Sizes.fixPadding * 8.0,
-  },
-  button2: {
-    // flexDirection: "row",
-    // alignItems: "center",
-    // marginRight: Sizes.fixPadding * 8.0,
-    // // marginTop: Sizes.fixPadding * 8.0,
-  },
-  or: {
-    color: "white",
-    marginLeft: Sizes.fixPadding * 8.0,
-  },
   registerButton: {
-    color: "#ffffff",
-    fontSize: 17,
-  },
-  signUp: {
-    marginTop: Sizes.fixPadding * 8.0,
-    // left: 70,
-    marginLeft: Sizes.fixPadding * 8.0,
-  },
-  iconfb: {
-    // backgroundColor: "white",
-    // height: 44,
-    // width: 44,
-    // borderRadius: 22,
-  },
-  textDeco: {
     alignItems: "center",
-    marginTop: Sizes.fixPadding * -20.5,
-    textDecorationLine: "underline",
     justifyContent: "center",
+  },
+  textFieldWrapStyle1: {
+    marginTop: "-24%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 60.0,
+    paddingHorizontal: Sizes.fixPadding * 2.0,
+    backgroundColor: "rgba(203, 189, 189, 0.73)",
+    borderRadius: Sizes.fixPadding * 2.0,
+    marginBottom: Sizes.fixPadding * 2.5,
+    ...Fonts.whiteColor14Medium,
   },
   textFieldWrapStyle: {
     alignItems: "center",
@@ -558,7 +437,7 @@ const styles = StyleSheet.create({
     ...Fonts.whiteColor14Medium,
   },
   selectAreaModalStyle: {
-    height: height * 0.5,
+    height: height * 5.5,
     width: width * 0.8,
     backgroundColor: Colors.whiteColor,
     borderRadius: Sizes.fixPadding,
@@ -567,27 +446,20 @@ const styles = StyleSheet.create({
     borderRadius: Sizes.fixPadding * 2.0,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Colors.whiteColor,
     flexDirection: "row",
     height: 56.0,
-    width: 130,
-    marginBottom: Sizes.fixPadding * 2.5,
-    marginTop: Sizes.fixPadding * 8.0,
-    paddingHorizontal: Sizes.fixPadding * 2.0,
-
-    // left: 175,
-    // top: 80,
+    marginBottom: Sizes.fixPadding * 2.0,
   },
   loginWithFacebookButtonStyle: {
     borderRadius: Sizes.fixPadding * 2.0,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: Sizes.fixPadding * 8.0,
+    marginTop: Sizes.fixPadding * 6.0,
     marginBottom: Sizes.fixPadding * 2.5,
+    backgroundColor: "#3B5998",
     flexDirection: "row",
-    // height: 56.0,
-    width: 130,
-    // left: 50,
-    // top: 122,
+    height: 56.0,
   },
   continueButtonStyle: {
     borderRadius: Sizes.fixPadding * 2.0,

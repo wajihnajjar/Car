@@ -49,7 +49,7 @@ class ContactUsScreen extends Component {
                 activeOpacity={0.9}
                 style={styles.submitButton}
                 onPress={ async () => {
-                    await axios.post("http://192.168.159.22:5000/admin/addReview",{message:this.state.message}).then(res=> { 
+                    await axios.post("http://192.168.1.123:5000/admin/addReview",{message:this.state.message}).then(res=> { 
 console.log("Review Done ")
                     })
                     
@@ -77,8 +77,8 @@ console.log("Review Done ")
                 multiline={true}
                 numberOfLines={4}
                 style={{ marginHorizontal: Sizes.fixPadding * 2.0, backgroundColor: Colors.whiteColor, marginTop: Sizes.fixPadding + 5.0 }}
-                multiline={true}
-                numberOfLines={6}
+                // multiline={true}
+                // numberOfLines={6}
                 theme={{ colors: { primary: Colors.primaryColor } }}
             />
         )
