@@ -144,7 +144,7 @@ class MyCarsScreen extends Component {
         onPress={() => this.props.navigation.push("AddNewCar")}
         style={styles.addNewCarButtonStyle}
       >
-        <Text style={{ ...Fonts.blackColor16Bold }}>Add new car</Text>
+        <Text style={{ ...Fonts.blackColor16Bold }}>Add new reminder</Text>
       </TouchableOpacity>
     );
   }
@@ -233,7 +233,7 @@ class MyCarsScreen extends Component {
             marginLeft: Sizes.fixPadding + 5.0,
           }}
         >
-          My Cars
+          My Reminders
         </Text>
       </View>
     );

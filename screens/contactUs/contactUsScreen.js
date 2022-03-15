@@ -77,8 +77,8 @@ console.log("Review Done ")
                 multiline={true}
                 numberOfLines={4}
                 style={{ marginHorizontal: Sizes.fixPadding * 2.0, backgroundColor: Colors.whiteColor, marginTop: Sizes.fixPadding + 5.0 }}
-                multiline={true}
-                numberOfLines={6}
+                // multiline={true}
+                // numberOfLines={6}
                 theme={{ colors: { primary: Colors.primaryColor } }}
             />
         )

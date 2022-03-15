@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   Image,
+  AsyncStorage,
 } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
@@ -14,8 +15,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 // import axios from "axios";
 
 class ProfileScreen extends Component {
-  componentDidMount() {
-    this.getdata();
+  async  componentDidMount() {
+    console.log("hellloooo");
+    await  this.getdata();
     BackHandler.addEventListener(
       "hardwareBackPress",
       this.handleBackButton.bind(this)
@@ -30,28 +32,33 @@ class ProfileScreen extends Component {
   }
   state = {
     username: "",
-    PhoneNumber : "",
-    email: "",
-    img: ""
+    email: ""
   };
 
-  getdata() {
-     axios
-      .get("http://192.168.1.123:5000/user/profil")
-      .then((res) => {
-        console.log(res,'state')
-        setState({
-          username: res.username ,
-          PhoneNumber : res.PhoneNumber ,
-          email : res.email ,
-          img : res.img
-        });
-        console.log(this.state,'setstate')
-        this.setState({data})
-      })
+ async getdata() {
+     await AsyncStorage.getItem("user_id").then(res=> { 
+
+      axios
+      .post("http://192.168.159.22:5000/user/getOnlyOneUser" , {user_id: res})
+      .then((res1) => {
+console.log(res1.data)
+this.setState({
+email : res1.data[0].email
+
+})
+this.setState({
+username : res1.data[0].username
+
+})
+
+})
       .catch((err) => {
         console.log(err, "===>");
       });
+
+     })
+    
+    
   }
 
   handleBackButton = () => {
@@ -76,7 +83,7 @@ class ProfileScreen extends Component {
       <>
         <View style={{ marginVertical: Sizes.fixPadding * 3.0 }}>
           <Image
-            source={require("../../assets/images/user/user_5.jpg")}
+            source={{uri:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.vectorstock.com%2Fi%2F1000x1000%2F17%2F61%2Fmale-avatar-profile-picture-vector-10211761.jpg"}}
             style={styles.userImageStyle}
           />
           <Text
@@ -86,11 +93,12 @@ class ProfileScreen extends Component {
               marginTop: Sizes.fixPadding,
             }}
           >
-            Hamid kacem
+
+{this.state.username}
           </Text>
         </View>
         {this.info({ title: "Phone Number", value: "52049969" })}
-        {this.info({ title: this.state.email, value:this.state.username })}
+        {this.info({ title: "Email", value: this.state.email })}
       </>
     );
   }

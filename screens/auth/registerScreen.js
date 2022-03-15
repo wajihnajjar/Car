@@ -52,7 +52,7 @@ class RegisterScreen extends Component {
 
   onSubmitFormHandler() {
     axios
-      .post(`http://192.168.22.206:5000/user/signup`, {
+      .post(`http://192.168.159.22:5000/user/signup`, {
         username: this.state.username,
         email: this.state.email,
         password: this.state.password,

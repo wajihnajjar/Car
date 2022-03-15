@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { SafeAreaView, BackHandler, View, StatusBar, StyleSheet, Text, TouchableOpacity, } from "react-native";
+import { SafeAreaView, BackHandler, View, StatusBar, StyleSheet, Text, TouchableOpacity,AsyncStorage } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-paper';
 import { TransitionPresets } from 'react-navigation-stack';
-
+import axios from"axios"
 class RateScreen extends Component {
 
     componentDidMount() {
@@ -48,7 +48,41 @@ class RateScreen extends Component {
         return (
             <TouchableOpacity
                 activeOpacity={0.9}
-                onPress={() => this.props.navigation.pop()}
+                onPress={async () => {
+await AsyncStorage.getItem("user_id").then( async (res)=> {
+    console.log(res)
+    await axios.post("http://192.168.159.22:5000/user/getOneUser" , {user_id : 6 }).then(async (res1) => {
+        var username =  res1.data[0].username
+       var star = 1
+       if(this.state.rate5)
+       star=  5 
+       else
+       if(this.state.rate4)
+       star = 4 
+       else 
+       if(this.state.rate3)
+       star = 3 
+       else 
+       if(this.state.rate2)
+       star = 2 
+       else 
+       if(this.state.rate1)
+       star = 1  
+       console.log(this.props.navigation.state)
+  var review = this.state.review 
+  await axios.post("http://192.168.159.22:5000/user/addReview",{mechanic_id : this.props.navigation.state.params.id , message: review  , user_name : username , star : star} ).then(async(k) =>{
+    await axios.post("http://192.168.159.22:5000/user/addReviewStart" , {mechanic_id : this.props.navigation.state.params.id , star : star})    
+
+
+  })
+})
+                                                                                 
+    this.props.navigation.pop()
+})
+
+                    
+                    
+                   }}
                 style={styles.submitButtonStyle} >
                 <Text style={{ ...Fonts.whiteColor18Bold }}>
                     Submit

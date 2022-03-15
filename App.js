@@ -21,6 +21,7 @@ import myCarsScreen from "./screens/myCars/myCarsScreen";
 import favoritesScreen from "./screens/favorites/favoritesScreen";
 import contactUsScreen from "./screens/contactUs/contactUsScreen";
 import settingsScreen from "./screens/settings/settingsScreen";
+import location from "./screens/Localisation"
 import privacyPolicyScreen from "./screens/privacyPolicy/privacyPolicyScreen";
 import termsOfUseScreen from "./screens/termsOfUse/termsOfUseScreen";
 import notificationsScreen from "./screens/notifications/notificationsScreen";
@@ -38,6 +39,7 @@ const switchNavigator = createSwitchNavigator(
       Login: loginScreen,
       Verification: verificationScreen,
       Home: homeScreen,
+      Location : location , 
       Register: registerScreen,
       ServiceProvider: serviceProviderScreen,
       SelectCar: selectCarScreen,
