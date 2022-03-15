@@ -165,7 +165,7 @@ class EditProfileScreen extends Component {
   }
 
   senddata = () => {
-    this.props.navigation.pop();
+    // this.props.navigation.pop();
     console.log("hani hnee Sa7bi");
     let data = {
       username: this.state.name,
@@ -174,7 +174,7 @@ class EditProfileScreen extends Component {
       img: this.state.img,
     };
     console.log(data);
-    axios.post("http://192.168.22.169:5000/user/profil", data).then((res) => {
+    axios.post("http:// 192.168.22.231:5000/user/profil", data).then((res) => {
       console.log(res, "tba3thet");
     });
   };
