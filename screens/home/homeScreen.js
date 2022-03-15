@@ -1,5 +1,5 @@
 import React, { useState, Component, useEffect } from "react";
-import { Text, View, SafeAreaView,  AsyncStorage ,StatusBar, Animated, BackHandler, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import {ImageBackground, Text, View, SafeAreaView,  AsyncStorage ,StatusBar, Animated, BackHandler, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -131,6 +131,7 @@ async     componentDidMount() {
     }
 
     header() {
+        const image = { uri: "https://i.pinimg.com/564x/2f/22/59/2f225924c083598fed27f7cee08cc340.jpg" };
         return (
             <View style={styles.headerWrapStyle}>
                 <MaterialIcons name="menu" size={24} color="black"
@@ -390,7 +391,7 @@ return [latitude , longitude]
         async  function  fetchData(){
             var arr =[]
            await _GetCord()
-            await axios.get("http://192.168.159.22:5000/admin/getAllMechanic").then(res=> {
+            await axios.get("http://192.168.11.65:5000/admin/getAllMechanic").then(res=> {
             console.log(res.data.length)
 
           for (let i = 0 ; i< res.data.length ; i++)
@@ -612,6 +613,10 @@ return [latitude , longitude]
 }
 
 const styles = StyleSheet.create({
+    image : {
+        flex: 1,
+        justifyContent: "center"
+    },
     headerWrapStyle: {
         backgroundColor: 'white',
         height: 50.0,

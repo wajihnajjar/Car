@@ -1,15 +1,6 @@
 import React, { useState, useRef, Component } from 'react';
 import { Fonts, Colors, Sizes, } from "../../constants/styles";
-import {
-    Text,
-    View,
-    SafeAreaView,
-    StatusBar,
-    StyleSheet,
-    Animated,
-    Dimensions,
-    BackHandler
-} from "react-native";
+import { Text,View,SafeAreaView,StatusBar,StyleSheet,Animated,Dimensions,BackHandler} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from "react-navigation";
 import { SwipeListView } from 'react-native-swipe-list-view';
@@ -76,6 +67,7 @@ BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(thi
     };
 
     render() {
+        {console.log(this.props,'props')}
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
                 <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />

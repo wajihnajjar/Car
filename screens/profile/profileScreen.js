@@ -12,7 +12,7 @@ import {
 import { withNavigation } from "react-navigation";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
+// import axios from "axios";
 
 class ProfileScreen extends Component {
   async  componentDidMount() {
@@ -53,7 +53,7 @@ username : res1.data[0].username
 
 })
       .catch((err) => {
-        console.log(err, "===================================>");
+        console.log(err, "===>");
       });
 
      })
@@ -140,7 +140,7 @@ username : res1.data[0].username
           name="edit"
           size={24}
           color={Colors.blackColor}
-          onPress={() => this.props.navigation.push("EditProfile")}
+          onPress={() => this.props.navigation.push("EditProfileScreen")}
         />
       </View>
     );
