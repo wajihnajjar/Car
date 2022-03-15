@@ -23,45 +23,40 @@ var favoritesList = [
 ];
 var self = this 
 class FavoritesScreen extends Component {
-
 state ={ 
 arr:[]
-
-
-
 }
-
-    async componentDidMount() {
+async componentDidMount() {
         var r = []
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
-        await AsyncStorage.getItem("user_id") .then( async   (res)=> { 
-            await axios.post('http://192.168.18.22:5000/user/getFavorite' , {user_id:res}).then(async (res1)=> { 
-         var unique = new Set(res1.data[0].fav)
- var reste = Array.from(unique)
-
-for( let i = 0 ; i< reste.length ; i ++){ 
-await  axios.post("http://192.168.18.22:5000/user/getMechanic" , {mechanic_id:reste[i]}).then(result=> { 
+        await AsyncStorage.getItem("user_id") .then( async (res)=> { 
+            await axios.post('http://192.168.159.22:5000/user/getFavorite' , {user_id:res}).then(async (res1)=> { 
+            var unique = new Set(res1.data[res1.data.length-1].fav)
+            var reste = Array.from(unique)
+            console.log(reste , "Reste is")
+ for( let i = 0 ; i< reste.length ; i ++){ 
+     console.log(reste[i] ," Arara")
+    await  axios.post("http://192.168.159.22:5000/user/getMechanic" , {mechanic_id:reste[i]}).then(result=> { 
 var a = {
-key : 0 , 
-image  : "", 
-name :  "" , 
-address :""  , 
-
+    key : 0 , 
+    image  : "", 
+    name :  "" , 
+    address :""  , 
 }
-a.key = result.data[0].mechanic_id 
+console.log(result.data[0],"hh")
+a.key = result.data[0].mechanic_id
 a.image = require('../../assets/images/service_provider/provider_1.jpg')
 a.address = result.data[0].address
 a["name"] = result.data[0].namePlace
 console.log(a)
-r.push(a)
+r.push(a)    
 })
-
 }
+
         })
                 }) 
-             
             this.setState({
-arr: r 
+                arr: r 
             })
 favoritesList = this.state.arr
         }
@@ -120,20 +115,20 @@ setListData (favoritesList)
         if (rowMap[rowKey]) {
             rowMap[rowKey].closeRow();
         }
-    };
+    }; 
 
     const deleteRow =  async (rowMap, rowKey) => {
         closeRow(rowMap, rowKey);
         const newData = [...listData];
         const prevIndex = listData.findIndex(item => item.key === rowKey);
         await AsyncStorage.getItem("user_id") .then( async (res)=> { 
-  await axios.post("http://192.168.18.22:5000/user/deleteFavo",{user_id: res , mechanic_id : listData[0].key}).then(rez => { 
+  await axios.post("http://192.168.159.22:5000/user/deleteFavo",{user_id: res , mechanic_id : listData[0].key}).then(rez => { 
 console.log("DAta Updated")
 })
  })
         newData.splice(prevIndex, 1);
         setShowSnackBar(true);
-        setListData(newData);
+        setListData(newData   );
     
 
     };
