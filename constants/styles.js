@@ -190,7 +190,7 @@ export const Colors = {
 };
 
 export const Sizes = {
-  fixPadding: 10.0,
+  fixPadding: 9.0,
 };
 
 const appStyle = { Fonts, Sizes, Colors };

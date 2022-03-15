@@ -400,9 +400,9 @@ class LoginScreen extends Component {
   }
   Logo() {
     return (
-      <View style={{marginLeft: "20%" ,marginTop:"20%"}}>
+      <View style={{marginLeft: "27%" ,marginTop:"10%"}}>
         <Image
-          style={{  height: 270, width: 270  }}
+          style={{  height: 210, width: 210  }}
           source={require("../../assets/images/Logo1.png")}
         />
       </View>
