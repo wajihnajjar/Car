@@ -161,7 +161,7 @@ arr: bookingList
                     style={{ position: 'absolute', left: 20.0 }}
                 />
                 <Text style={{ ...Fonts.blackColor18Bold, marginLeft: Sizes.fixPadding + 5.0, }}>
-                    My Booking
+                    My appointment
                 </Text>
             </View>
         )
