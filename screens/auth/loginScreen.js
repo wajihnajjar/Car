@@ -188,7 +188,7 @@ class LoginScreen extends Component {
         />
         <ImageBackground
           style={{ flex: 1 }}
-          source={require("../../assets/images/bg.jpg")}
+          source={require("../../assets/images/black1.jpg")}
           resizeMode="cover"
         >
           <LinearGradient

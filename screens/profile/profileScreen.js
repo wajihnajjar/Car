@@ -15,9 +15,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 // import axios from "axios";
 
 class ProfileScreen extends Component {
-  async  componentDidMount() {
+  async componentDidMount() {
     console.log("hellloooo");
-    await  this.getdata();
+    await this.getdata();
     BackHandler.addEventListener(
       "hardwareBackPress",
       this.handleBackButton.bind(this)
@@ -32,12 +32,11 @@ class ProfileScreen extends Component {
   }
   state = {
     username: "",
-    email: ""
+    email: "",
   };
 
- async getdata() {
-     await AsyncStorage.getItem("user_id").then(res=> { 
-
+  async getdata() {
+    await AsyncStorage.getItem("user_id").then((res) => {
       axios
       .post("http://192.168.159.22:5000/user/getOnlyOneUser" , {user_id: res})
       .then((res1) => {
@@ -83,7 +82,9 @@ username : res1.data[0].username
       <>
         <View style={{ marginVertical: Sizes.fixPadding * 3.0 }}>
           <Image
-            source={{uri:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.vectorstock.com%2Fi%2F1000x1000%2F17%2F61%2Fmale-avatar-profile-picture-vector-10211761.jpg"}}
+            source={{
+              uri: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.vectorstock.com%2Fi%2F1000x1000%2F17%2F61%2Fmale-avatar-profile-picture-vector-10211761.jpg",
+            }}
             style={styles.userImageStyle}
           />
           <Text
@@ -93,8 +94,7 @@ username : res1.data[0].username
               marginTop: Sizes.fixPadding,
             }}
           >
-
-{this.state.username}
+            {this.state.username}
           </Text>
         </View>
         {this.info({ title: "Phone Number", value: "52049969" })}
