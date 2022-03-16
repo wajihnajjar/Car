@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Icon } from "react-native-elements";
+
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -27,6 +29,7 @@ import * as Google from "expo-google-app-auth";
 import * as Facebook from "expo-facebook";
 import { NavigationEvents } from "react-navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const { width, height } = Dimensions.get("screen");
 
@@ -186,9 +189,12 @@ class LoginScreen extends Component {
             );
           }}
         />
+      
+        >
         <ImageBackground
           style={{ flex: 1 }}
-          source={require("../../assets/images/bg.jpg")}
+          source={require("../../assets/images/bg1.jpg")}
+           
           resizeMode="cover"
         >
           <LinearGradient
@@ -210,6 +216,7 @@ class LoginScreen extends Component {
           </LinearGradient>
         </ImageBackground>
         <Animated.View
+
           style={[
             styles.animatedView,
             { transform: [{ translateY: this.springValue }] },
@@ -301,15 +308,29 @@ class LoginScreen extends Component {
           justifyContent: "center",
         }}
       >
-        <Image
-          source={require("../../assets/images/facebook.png")}
-          style={{ height: 50.0, width: 50.0 }}
-          resizeMode="cover"
+        <Icon
+          style={{
+            backgroundColor: "#F6BF3E",
+            padding: 14,
+            marginHorizontal: 20,
+            borderRadius: 100,
+          }}
+          name="facebook-square"
+          type="font-awesome"
+          size={30}
+          color="black"
         />
-        <Image
-          source={require("../../assets/images/google.png")}
-          style={{ marginLeft: "20%", height: 50.0, width: 50.0 }}
-          resizeMode="cover"
+        <Icon
+          style={{
+            backgroundColor: "#F6BF3E",
+            padding: 14,
+            marginHorizontal: 20,
+            borderRadius: 100,
+          }}
+          name="google"
+          type="font-awesome"
+          size={30}
+          color="black"
         />
 
         {/* Log in with Facebook or Google */}
@@ -398,11 +419,11 @@ class LoginScreen extends Component {
       </View>
     );
   }
-  Logo(){ 
+  Logo() {
     return (
-      <View style={{marginLeft: "27%" ,marginTop:"10%"}}>
+      <View style={{ marginLeft: "27%", marginTop: "10%" }}>
         <Image
-          style={{  height: 210, width: 210  }}
+          style={{ height: 210, width: 210 }}
           source={require("../../assets/images/Logo1.png")}
         />
       </View>
@@ -411,6 +432,13 @@ class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  iconButton: {
+    backgroundColor: "#333",
+    padding: 14,
+    marginHorizontal: 10,
+    borderRadius: 100,
+    
+  },
   registerButton: {
     alignItems: "center",
     justifyContent: "center",
