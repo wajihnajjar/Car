@@ -12,7 +12,7 @@ import {
 import { withNavigation } from "react-navigation";
 import { Colors, Sizes, Fonts } from "../../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
-import axios from "axios";
+// import axios from "axios";
 
 class ProfileScreen extends Component {
   async componentDidMount() {
@@ -38,22 +38,26 @@ class ProfileScreen extends Component {
   async getdata() {
     await AsyncStorage.getItem("user_id").then((res) => {
       axios
-        .post("http://192.168.159.22:5000/user/getOnlyOneUser", {
-          user_id: res,
-        })
-        .then((res1) => {
-          console.log(res1.data);
-          this.setState({
-            email: res1.data[0].email,
-          });
-          this.setState({
-            username: res1.data[0].username,
-          });
-        })
-        .catch((err) => {
-          console.log(err, "===================================>");
-        });
-    });
+      .post("http://192.168.159.22:5000/user/getOnlyOneUser" , {user_id: res})
+      .then((res1) => {
+console.log(res1.data)
+this.setState({
+email : res1.data[0].email
+
+})
+this.setState({
+username : res1.data[0].username
+
+})
+
+})
+      .catch((err) => {
+        console.log(err, "===>");
+      });
+
+     })
+    
+    
   }
 
   handleBackButton = () => {
@@ -136,7 +140,7 @@ class ProfileScreen extends Component {
           name="edit"
           size={24}
           color={Colors.blackColor}
-          onPress={() => this.props.navigation.push("EditProfile")}
+          onPress={() => this.props.navigation.push("EditProfileScreen")}
         />
       </View>
     );

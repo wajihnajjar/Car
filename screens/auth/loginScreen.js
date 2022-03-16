@@ -188,7 +188,7 @@ class LoginScreen extends Component {
         />
         <ImageBackground
           style={{ flex: 1 }}
-          source={require("../../assets/images/bg.jpg")}
+          source={require("../../assets/images/black1.jpg")}
           resizeMode="cover"
         >
           <LinearGradient
@@ -198,13 +198,14 @@ class LoginScreen extends Component {
             style={{ flex: 1, paddingHorizontal: Sizes.fixPadding * 2.0 }}
           >
             <ScrollView showsVerticalScrollIndicator={false}>
+              {this.Logo()}
               {this.welcomeInfo()}
               {this.EmailTextField()}
               {this.PasswordTextField()}
               {this.continueButton()}
               {this.registerButton()}
-              {this.loginWithFacebookButton()}
               {this.loginWithGoogleButton()}
+              {this.loginWithFacebookButton()}
             </ScrollView>
           </LinearGradient>
         </ImageBackground>
@@ -232,7 +233,7 @@ class LoginScreen extends Component {
         }}
         defaultCountry="IN"
         onChangeText={(email) => this.setState({ email })}
-        style={styles.textFieldWrapStyle}
+        style={styles.textFieldWrapStyle1}
         placeholder="Email..."
         placeholderTextColor="white"
         dialCodeTextStyle={{
@@ -243,7 +244,7 @@ class LoginScreen extends Component {
           backgroundColor: "rgba(203, 189, 189, 0.73)",
           borderRadius: Sizes.fixPadding * 2.0,
           height: 56.0,
-          marginTop: Sizes.fixPadding * 1.0,
+          marginTop: "25%",
         }}
       />
     );
@@ -278,42 +279,47 @@ class LoginScreen extends Component {
 
   loginWithGoogleButton() {
     return (
-      <View style={styles.loginWithGoogleButtonStyle}>
-        <Image
-          source={require("../../assets/images/google.png")}
-          style={{ height: 37.0, width: 37.0 }}
-          resizeMode="cover"
-        />
-        <Text
-          onPress={this.signInWithGoogleAsync}
-          style={{
-            ...Fonts.blackColor14Medium,
-            marginLeft: Sizes.fixPadding + 5.0,
-          }}
-        >
-          Log in with Google
-        </Text>
-      </View>
+      <Text
+        style={{
+          textAlign: "center",
+          marginTop: Sizes.fixPadding * 4.0,
+          ...Fonts.whiteColor18Medium,
+          borderRadius: Sizes.fixPadding * 0.0,
+        }}
+      >
+        Log in with Facebook or Google
+      </Text>
     );
   }
 
   loginWithFacebookButton() {
     return (
-      <View style={styles.loginWithFacebookButtonStyle}>
+      <View
+        style={{
+          marginTop: "5%",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
         <Image
           source={require("../../assets/images/facebook.png")}
-          style={{ height: 37.0, width: 37.0 }}
+          style={{ height: 50.0, width: 50.0 }}
           resizeMode="cover"
         />
-        <Text
-          onPress={this.fbLogin}
-          style={{
-            ...Fonts.whiteColor14Medium,
-            marginLeft: Sizes.fixPadding + 5.0,
-          }}
-        >
-          Log in with Facebook
-        </Text>
+        <Image
+          source={require("../../assets/images/google.png")}
+          style={{ marginLeft: "20%", height: 50.0, width: 50.0 }}
+          resizeMode="cover"
+        />
+
+        {/* Log in with Facebook or Google */}
+
+        {/* <View style={styles.loginWithGoogleButtonStyle}>
+        <Image
+          source={require("../../assets/images/google.png")}
+          style={{ height: 37.0, width: 37.0 }}
+          resizeMode="cover"
+        /></View> */}
       </View>
     );
   }
@@ -331,7 +337,7 @@ class LoginScreen extends Component {
     return (
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={ async () => {
+        onPress={async () => {
           if (!this.state.email || !this.state.password) {
             alert("put all info");
             this.props.navigation.navigate("Home");
@@ -341,11 +347,16 @@ class LoginScreen extends Component {
             } else if (format.test(this.state.password) !== true) {
               alert("Password must includes Uppercase and Symboles");
             } else {
-   axios.post("http://192.168.159.22:5000/user/getIdUser"  , {
-email : this.state.email 
-   }) . then( async (res)=> { 
-  await AsyncStorage.setItem("user_id" , res.data[0].user_id.toString())
-   } )
+              axios
+                .post("http://192.168.159.22:5000/user/getIdUser", {
+                  email: this.state.email,
+                })
+                .then(async (res) => {
+                  await AsyncStorage.setItem(
+                    "user_id",
+                    res.data[0].user_id.toString()
+                  );
+                });
               this.login();
             }
           }
@@ -354,7 +365,7 @@ email : this.state.email
         <LinearGradient
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          colors={["rgba(253, 153, 2,1.2)", "rgba(253, 153, 2, 0.49)"]}
+          colors={["rgba(209, 185, 2,1.2)", "rgba(253, 198, 2, 0.49)"]}
           style={styles.continueButtonStyle}
         >
           <Text style={{ ...Fonts.whiteColor18Bold }}>Login</Text>
@@ -363,13 +374,15 @@ email : this.state.email
     );
   }
   registerButton() {
-    return (   
-          <Text  style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }} 
+    return (
+      <Text
+        style={{ ...Fonts.whiteColor18Medium, textAlign: "center" }}
         onPress={() => {
           this.props.navigation.navigate("Register");
         }}
-        >Register</Text>
-      
+      >
+        Register
+      </Text>
     );
   }
 
@@ -382,16 +395,36 @@ email : this.state.email
         }}
       >
         <Text style={{ ...Fonts.whiteColor36Bold }}></Text>
-      
+      </View>
+    );
+  }
+  Logo() {
+    return (
+      <View style={{marginLeft: "20%" ,marginTop:"20%"}}>
+        <Image
+          style={{  height: 270, width: 270  }}
+          source={require("../../assets/images/Logo1.png")}
+        />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  registerButton:{
+  registerButton: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  textFieldWrapStyle1: {
+    marginTop: "-24%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 60.0,
+    paddingHorizontal: Sizes.fixPadding * 2.0,
+    backgroundColor: "rgba(203, 189, 189, 0.73)",
+    borderRadius: Sizes.fixPadding * 2.0,
+    marginBottom: Sizes.fixPadding * 2.5,
+    ...Fonts.whiteColor14Medium,
   },
   textFieldWrapStyle: {
     alignItems: "center",
@@ -404,7 +437,7 @@ const styles = StyleSheet.create({
     ...Fonts.whiteColor14Medium,
   },
   selectAreaModalStyle: {
-    height: height * 0.5,
+    height: height * 5.5,
     width: width * 0.8,
     backgroundColor: Colors.whiteColor,
     borderRadius: Sizes.fixPadding,

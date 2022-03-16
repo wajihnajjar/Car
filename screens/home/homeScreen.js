@@ -1,5 +1,6 @@
 import React, { useState, Component, useEffect } from "react";
 import {
+  ImageBackground,
   Text,
   View,
   SafeAreaView,
@@ -59,7 +60,7 @@ class HomeScreen extends Component {
   async getdata() {
     await AsyncStorage.getItem("user_id").then((res) => {
       axios
-        .post("http://192.168.159.22:5000/user/getOnlyOneUser", {
+        .post("http://192.168.22.167:5000/user/getOnlyOneUser", {
           user_id: res,
         })
         .then((res1) => {
@@ -149,15 +150,15 @@ class HomeScreen extends Component {
         <MaterialIcons
           name="menu"
           size={24}
-          color="black"
+          color="rgba(253, 198, 2, 0.49)"
           onPress={() => this.setState({ openDrawer: true })}
           style={{ marginLeft: Sizes.fixPadding * 2.0 }}
         />
-        <Text style={{ ...Fonts.blackColor18Bold }}>Carhabty</Text>
+        <Text style={styles.log}>Carhabty</Text>
         <MaterialIcons
           name="notifications"
           size={24}
-          color="black"
+          color="rgba(253, 198, 2, 0.49)"
           style={{ marginRight: Sizes.fixPadding * -6.8 }}
           onPress={() => this.props.navigation.push("Notifications")}
         />
@@ -222,10 +223,14 @@ class HomeScreen extends Component {
             marginTop: Sizes.fixPadding - 5.0,
           }}
         >
-          <MaterialIcons name="home" size={24} color={Colors.blackColor} />
+          <MaterialIcons
+            name="home"
+            size={24}
+            color={"rgba(253, 198, 2, 0.49)"}
+          />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -243,10 +248,14 @@ class HomeScreen extends Component {
             marginTop: Sizes.fixPadding - 5.0,
           }}
         >
-          <MaterialIcons name="security" size={24} color={Colors.blackColor} />
+          <MaterialIcons
+            name="security"
+            size={24}
+            color={"rgba(253, 198, 2, 0.49)"}
+          />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -264,11 +273,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="directions-car"
             size={24}
-            color={Colors.blackColor}
+            color={"rgba(253, 198, 2, 0.49)"}
           />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -283,10 +292,14 @@ class HomeScreen extends Component {
           }}
           style={{ ...styles.drawerItemStyle }}
         >
-          <MaterialIcons name="favorite" size={24} color={Colors.blackColor} />
+          <MaterialIcons
+            name="favorite"
+            size={24}
+            color={"rgba(253, 198, 2, 0.49)"}
+          />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -304,11 +317,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="location-on"
             size={24}
-            color={Colors.blackColor}
+            color={"rgba(253, 198, 2, 0.49)"}
           />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -323,10 +336,14 @@ class HomeScreen extends Component {
           }}
           style={{ ...styles.drawerItemStyle }}
         >
-          <MaterialIcons name="email" size={24} color={Colors.blackColor} />
+          <MaterialIcons
+            name="email"
+            size={24}
+            color={"rgba(253, 198, 2, 0.49)"}
+          />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -341,10 +358,14 @@ class HomeScreen extends Component {
           }}
           style={{ ...styles.drawerItemStyle }}
         >
-          <MaterialIcons name="settings" size={24} color={Colors.blackColor} />
+          <MaterialIcons
+            name="settings"
+            size={24}
+            color={"rgba(253, 198, 2, 0.49)"}
+          />
           <Text
             style={{
-              ...Fonts.blackColor14Regular,
+              color: "rgba(253, 198, 2, 0.49)",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -360,7 +381,7 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="exit-to-app"
             size={24}
-            color={Colors.primaryColor}
+            color={"red"}
           />
           <Text
             style={{
@@ -503,7 +524,7 @@ const NearestPlaces = ({ props }) => {
       var arr = [];
       await _GetCord();
       await axios
-        .get("http://192.168.159.22:5000/admin/getAllMechanic")
+        .get("http://192.168.22.167:5000/admin/getAllMechanic")
         .then((res) => {
           console.log(res.data.length);
 
@@ -745,8 +766,15 @@ const NearestPlaces = ({ props }) => {
 };
 
 const styles = StyleSheet.create({
+  log: {
+    color: "rgba(253, 198, 2, 0.49)",
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+  },
   headerWrapStyle: {
-    backgroundColor: "white",
+    backgroundColor: "#181818",
     height: 50.0,
     flexDirection: "row",
     alignItems: "center",
@@ -794,7 +822,7 @@ const styles = StyleSheet.create({
   },
   drawerStyle: {
     flex: 1,
-    backgroundColor: Colors.whiteColor,
+    backgroundColor: "#181818",
   },
   dialogStyle: {
     borderRadius: Sizes.fixPadding,

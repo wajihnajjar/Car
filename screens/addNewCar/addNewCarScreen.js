@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   SafeAreaView,
   View,
+  Image,
   StatusBar,
   BackHandler,
   StyleSheet,
@@ -82,6 +83,7 @@ class AddNewCarScreen extends Component {
           {this.header()}
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* {this.cameraSelection()} */}
+            {this.image()}
             {this.carBrandNameTextField()}
             {this.carModelTextField()}
             {/* {this.carNumberTextField()} */}
@@ -255,9 +257,7 @@ class AddNewCarScreen extends Component {
 
   addReminder() {
     axios
-
-      .post("http://192.168.159.22:5000/user/reminder", {
-
+      .post("http://192.168.1.123:5000/user/reminder", {
         vehicleLicenseExpiry: this.state.vehicleLicenseExpiry,
         insuranceExpiry: this.state.insuranceExpiry,
         technicalVisit: this.state.technicalVisit,
@@ -305,7 +305,17 @@ class AddNewCarScreen extends Component {
   //     />
   //   );
   // }
-
+  image() {
+    return (
+      <View>
+        <Image
+          source={require("../../assets/images/image.png")}
+          style={{ height: 320.0, width: 320.0, bottom: 37, left: 26 }}
+          resizeMode="cover"
+        />
+      </View>
+    );
+  }
   carModelTextField() {
     return (
       <TextInput
@@ -317,7 +327,11 @@ class AddNewCarScreen extends Component {
         }}
         selectionColor={Colors.primaryColor}
         placeholder="Put your reminder..."
-        style={{ ...styles.textFieldStyle, marginTop: Sizes.fixPadding * 2.0 }}
+        style={{
+          ...styles.textFieldStyle,
+          marginTop: Sizes.fixPadding * 2.0,
+          bottom: 3,
+        }}
         placeholderTextColor={Colors.grayColor}
       />
     );
@@ -364,6 +378,7 @@ class AddNewCarScreen extends Component {
               },
               dateInput: {
                 marginLeft: 36,
+                borderRadius: 12,
               },
             }}
             onDateChange={(date) => {
@@ -412,6 +427,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     justifyContent: "center",
+    marginTop: Sizes.fixPadding * -5.0,
     alignItems: "center",
   },
   title: {
@@ -423,6 +439,7 @@ const styles = StyleSheet.create({
   datePickerStyle: {
     width: 200,
     marginTop: 20,
+    borderRadius: Sizes.fixPadding,
   },
   headerWrapStyle: {
     height: 50.0,
@@ -457,7 +474,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 56.0,
     marginHorizontal: Sizes.fixPadding * 2.0,
-    marginTop: Sizes.fixPadding * 5.0,
+    marginTop: Sizes.fixPadding * 17.0,
   },
   cameraSelectionStyle: {
     width: 100.0,
