@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { StatusBar } from 'react-native';
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -9,7 +10,7 @@ import {
   Text,
   View,
   SafeAreaView,
-  StatusBar,
+  
   StyleSheet,
   ImageBackground,
   ScrollView,
@@ -41,6 +42,8 @@ class LoginScreen extends Component {
       "hardwareBackPress",
       this.handleBackButton.bind(this)
     );
+    StatusBar.setHidden(true);
+
   }
 
   componentWillUnmount() {

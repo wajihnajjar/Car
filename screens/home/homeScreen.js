@@ -150,7 +150,7 @@ class HomeScreen extends Component {
         <MaterialIcons
           name="menu"
           size={24}
-          color="rgba(253, 198, 2, 0.49)"
+          color="#F6BF3E"
           onPress={() => this.setState({ openDrawer: true })}
           style={{ marginLeft: Sizes.fixPadding * 2.0 }}
         />
@@ -158,7 +158,7 @@ class HomeScreen extends Component {
         <MaterialIcons
           name="notifications"
           size={24}
-          color="rgba(253, 198, 2, 0.49)"
+          color="#F6BF3E"
           style={{ marginRight: Sizes.fixPadding * -6.8 }}
           onPress={() => this.props.navigation.push("Notifications")}
         />
@@ -178,7 +178,7 @@ class HomeScreen extends Component {
         <View
           style={{
             alignItems: "center",
-            marginTop: Sizes.fixPadding + 10.0,
+            marginTop: Sizes.fixPadding + 7.0,
             marginBottom: Sizes.fixPadding * 3.0,
           }}
         >
@@ -207,7 +207,7 @@ class HomeScreen extends Component {
               this.props.navigation.push("Profile");
             }}
           >
-            <Text style={{ ...Fonts.grayColor12MediumItalic }}>
+            <Text style={{ color:"#F6BF3E" }}>
               View Profile
             </Text>
           </TouchableOpacity>
@@ -226,11 +226,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="home"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -251,11 +251,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="security"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -273,11 +273,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="directions-car"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -295,11 +295,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="favorite"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -317,11 +317,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="location-on"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -339,11 +339,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="email"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -361,11 +361,11 @@ class HomeScreen extends Component {
           <MaterialIcons
             name="settings"
             size={24}
-            color={"rgba(253, 198, 2, 0.49)"}
+            color={"#F6BF3E"}
           />
           <Text
             style={{
-              color: "rgba(253, 198, 2, 0.49)",
+              color: "#F6BF3E",
               marginLeft: Sizes.fixPadding * 2.0,
             }}
           >
@@ -378,11 +378,7 @@ class HomeScreen extends Component {
           onPress={() => this.setState({ showLogoutDialog: true })}
           style={styles.logoutWrapStyle}
         >
-          <MaterialIcons
-            name="exit-to-app"
-            size={24}
-            color={"red"}
-          />
+          <MaterialIcons name="exit-to-app" size={24} color={"red"} />
           <Text
             style={{
               ...Fonts.primaryColor14Regular,
@@ -767,7 +763,7 @@ const NearestPlaces = ({ props }) => {
 
 const styles = StyleSheet.create({
   log: {
-    color: "rgba(253, 198, 2, 0.49)",
+    color: "#F6BF3E",
   },
   image: {
     flex: 1,
@@ -823,6 +819,7 @@ const styles = StyleSheet.create({
   drawerStyle: {
     flex: 1,
     backgroundColor: "#181818",
+    borderColor: "white",
   },
   dialogStyle: {
     borderRadius: Sizes.fixPadding,
