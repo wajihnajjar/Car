@@ -100,14 +100,15 @@ class RegisterScreen extends Component {
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => {
-          if (
-            !this.state.username ||
-            !this.state.email ||
-            !this.state.password ||
-            !this.state.number
-          ) {
-            alert("Please fill all required info");
-          } else {
+          // if (
+          //   !this.state.username ||
+          //   !this.state.email ||
+          //   !this.state.password ||
+          //   !this.state.number
+          // ) {
+          //   alert("Please fill all required info");
+          // } 
+          // else {
             if (this.state.email.indexOf("@") == -1) {
               alert("email must be correct");
             } else if (format.test(this.state.password) !== true) {
@@ -119,7 +120,7 @@ class RegisterScreen extends Component {
                 this.props.navigation.push("Verification")
               );
             }
-          }
+          // }
         }}
       >
         <LinearGradient
