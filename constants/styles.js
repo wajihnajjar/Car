@@ -55,7 +55,7 @@ export const Fonts = {
 
   blackColor14Regular: {
     fontSize: 14.0,
-    color: "#000000",
+    color: "#C2A904",
     fontFamily: "Montserrat_Regular",
   },
 
@@ -183,8 +183,8 @@ export const Fonts = {
 
 export const Colors = {
   whiteColor: "#FFFFFF",
-  blackColor: "#000000",
-  primaryColor: "#000000",
+  blackColor: "#F5B703",
+  primaryColor: "#f51703",
   ratingColor: "#ffd000",
   grayColor: "#CFC6C6",
 };

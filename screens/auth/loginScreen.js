@@ -398,7 +398,7 @@ class LoginScreen extends Component {
       </View>
     );
   }
-  Logo() {
+  Logo(){ 
     return (
       <View style={{marginLeft: "27%" ,marginTop:"10%"}}>
         <Image

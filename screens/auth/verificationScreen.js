@@ -289,3 +289,5 @@ VerificationScreen.navigationOptions = () => {
 }
 
 export default withNavigation(VerificationScreen);
+
+

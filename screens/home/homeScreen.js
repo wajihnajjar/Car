@@ -49,7 +49,7 @@ async     componentDidMount() {
         await AsyncStorage.getItem("user_id").then(res=> { 
    
          axios
-         .post("http://192.168.159.22:5000/user/getOnlyOneUser" , {user_id: res})
+         .post("http://192.168.11.193:5000/user/getOnlyOneUser" , {user_id: res})
          .then((res1) => {
    console.log(res1.data)
    this.setState({
@@ -391,9 +391,9 @@ return [latitude , longitude]
         async  function  fetchData(){
             var arr =[]
            await _GetCord()
-            await axios.get("http://192.168.11.65:5000/admin/getAllMechanic").then(res=> {
+            await axios.get("http://192.168.11.193:5000/admin/getAllMechanic").then(res=> {
             console.log(res.data.length)
-
+alert("test")
           for (let i = 0 ; i< res.data.length ; i++)
           markers.push({ coordinate: {
             latitude: 0,
