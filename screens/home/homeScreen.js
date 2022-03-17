@@ -174,6 +174,7 @@ class HomeScreen extends Component {
 
   drawerContent = () => {
     return (
+        
       <View style={styles.drawerStyle}>
         <View
           style={{
@@ -819,6 +820,7 @@ const styles = StyleSheet.create({
   drawerStyle: {
     flex: 1,
     backgroundColor: "#181818",
+    
     borderColor: "white",
   },
   dialogStyle: {
