@@ -5,6 +5,7 @@ import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Snackbar } from 'react-native-paper';
+
 import axios from "axios";
 
 var favoritesList = [

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Icon } from "react-native-elements";
 
+import { StatusBar } from "react-native";
 // import {
 //   GoogleSignin,
 //   GoogleSigninButton,
@@ -11,7 +12,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   ImageBackground,
   ScrollView,
@@ -30,7 +30,6 @@ import * as Facebook from "expo-facebook";
 import { NavigationEvents } from "react-navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const { width, height } = Dimensions.get("screen");
 
 class LoginScreen extends Component {
@@ -44,6 +43,7 @@ class LoginScreen extends Component {
       "hardwareBackPress",
       this.handleBackButton.bind(this)
     );
+    StatusBar.setHidden(true);
   }
 
   componentWillUnmount() {
@@ -180,7 +180,7 @@ class LoginScreen extends Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
+        <StatusBar translucent backgroundColor="rgba(0,0,0)" />
         <NavigationEvents
           onDidFocus={() => {
             BackHandler.addEventListener(
@@ -189,23 +189,19 @@ class LoginScreen extends Component {
             );
           }}
         />
-      
-        >
         <ImageBackground
           style={{ flex: 1 }}
-          source={require("../../assets/images/bg1.jpg")}
-           
+          source={require("../../assets/images/bg.jpg")}
           resizeMode="cover"
         >
           <LinearGradient
             start={{ x: 0, y: 1 }}
             end={{ x: 0, y: 0 }}
-            colors={["black", "rgba(0,0.10,0,0.70)", "rgba(0,0,0,0.0)"]}
+            colors={["black", "rgba(0,0,0,0)"]}
             style={{ flex: 1, paddingHorizontal: Sizes.fixPadding * 2.0 }}
           >
             <ScrollView showsVerticalScrollIndicator={false}>
               {this.Logo()}
-              {this.welcomeInfo()}
               {this.EmailTextField()}
               {this.PasswordTextField()}
               {this.continueButton()}
@@ -216,7 +212,6 @@ class LoginScreen extends Component {
           </LinearGradient>
         </ImageBackground>
         <Animated.View
-
           style={[
             styles.animatedView,
             { transform: [{ translateY: this.springValue }] },
@@ -251,7 +246,6 @@ class LoginScreen extends Component {
           backgroundColor: "rgba(203, 189, 189, 0.73)",
           borderRadius: Sizes.fixPadding * 2.0,
           height: 56.0,
-          marginTop: "25%",
         }}
       />
     );
@@ -272,7 +266,7 @@ class LoginScreen extends Component {
         secureTextEntry={true}
         dialCodeTextStyle={{
           ...Fonts.whiteColor14Medium,
-          marginLeft: Sizes.fixPadding,
+          // marginLeft: Sizes.fixPadding,
         }}
         containerStyle={{
           backgroundColor: "rgba(203, 189, 189, 0.73)",
@@ -310,7 +304,7 @@ class LoginScreen extends Component {
       >
         <Icon
           style={{
-            backgroundColor: "#F6BF3E",
+            backgroundColor: "#C69903",
             padding: 14,
             marginHorizontal: 20,
             borderRadius: 100,
@@ -322,7 +316,7 @@ class LoginScreen extends Component {
         />
         <Icon
           style={{
-            backgroundColor: "#F6BF3E",
+            backgroundColor: "#C69903",
             padding: 14,
             marginHorizontal: 20,
             borderRadius: 100,
@@ -411,11 +405,12 @@ class LoginScreen extends Component {
     return (
       <View
         style={{
-          marginTop: Sizes.fixPadding * 8.0,
+          marginTop: Sizes.fixPadding * 25.0,
           marginBottom: Sizes.fixPadding * 4.0,
+          marginLeft: Sizes.fixPadding * 190.0,
         }}
       >
-        <Text style={{ ...Fonts.whiteColor36Bold }}></Text>
+        <Text style={{ ...Fonts.whiteColor36Bold }}>My Car</Text>
       </View>
     );
   }
@@ -423,7 +418,7 @@ class LoginScreen extends Component {
     return (
       <View style={{ marginLeft: "27%", marginTop: "10%" }}>
         <Image
-          style={{ height: 210, width: 210 }}
+          style={{ height: 230, width: 180 }}
           source={require("../../assets/images/Logo1.png")}
         />
       </View>
@@ -432,24 +427,33 @@ class LoginScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  Login: {
+    ...Fonts.whiteColor18Medium,
+    borderRadius: Sizes.fixPadding * 2.0,
+    justifyContent: "center",
+    textAlign: "center",
+    marginLeft: Sizes.fixPadding + 139.0,
+    height: 56.0,
+    width: 150,
+    backgroundColor: "#f6bf3e",
+  },
   iconButton: {
     backgroundColor: "#333",
     padding: 14,
     marginHorizontal: 10,
     borderRadius: 100,
-    
   },
   registerButton: {
     alignItems: "center",
     justifyContent: "center",
   },
   textFieldWrapStyle1: {
-    marginTop: "-24%",
+    marginTop: "8%",
     alignItems: "center",
     justifyContent: "center",
     height: 60.0,
     paddingHorizontal: Sizes.fixPadding * 2.0,
-    backgroundColor: "rgba(203, 189, 189, 0.73)",
+    backgroundColor: "#474747",
     borderRadius: Sizes.fixPadding * 2.0,
     marginBottom: Sizes.fixPadding * 2.5,
     ...Fonts.whiteColor14Medium,
@@ -459,7 +463,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 60.0,
     paddingHorizontal: Sizes.fixPadding * 2.0,
-    backgroundColor: "rgba(203, 189, 189, 0.73)",
+    backgroundColor: "#474747",
     borderRadius: Sizes.fixPadding * 2.0,
     marginBottom: Sizes.fixPadding * 2.5,
     ...Fonts.whiteColor14Medium,
@@ -496,6 +500,8 @@ const styles = StyleSheet.create({
     marginTop: Sizes.fixPadding * 0.0,
     marginBottom: Sizes.fixPadding * 2.0,
     height: 54.0,
+    width: 260.0,
+    marginLeft: "20%",
   },
   searchCountryTextFieldContentStyle: {
     marginHorizontal: Sizes.fixPadding * 2.0,
