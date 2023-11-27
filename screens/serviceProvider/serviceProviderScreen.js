@@ -1,22 +1,20 @@
-import React, { Component , useEffect } from "react";
-import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, AsyncStorage,  Linking , ScrollView, FlatList, Image, Text, TouchableOpacity, Alert } from "react-native";
+import React, { Component } from "react";
+import { SafeAreaView, View, BackHandler, StatusBar, StyleSheet, ScrollView, FlatList, Image, Text, TouchableOpacity } from "react-native";
 import { withNavigation } from "react-navigation";
 import { Colors, Fonts, Sizes } from "../../constants/styles";
 import { MaterialIcons } from '@expo/vector-icons';
 import CollapsingToolbar from "../../components/sliverAppBarScreen";
 import MapView, { Marker } from "react-native-maps";
 import { Snackbar } from "react-native-paper";
-import axios from "axios";
-import { TextInput } from "react-native-gesture-handler";
 
-var reviewsList = [
+const reviewsList = [
     {
         id: '1',
         image: require('../../assets/images/user/user_3.jpg'),
         name: 'Emilli Williamson',
         date: '20 Feb, 2021',
         review: 'Best Services.',
-        rating: 4,
+        rating: 5,
     },
     {
         id: '2',
@@ -43,7 +41,7 @@ var reviewsList = [
         rating: 3,
     }
 ];
-var r =[]
+
 const servicesList = [
     {
         id: '1',
@@ -76,7 +74,6 @@ const servicesList = [
 ];
 
 class ServiceProviderScreen extends Component {
- 
 
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
@@ -98,8 +95,6 @@ class ServiceProviderScreen extends Component {
         servicesData: servicesList,
         showSnackBar: false,
         isFavorite: false,
-        arr:[] , 
-        work : ''
     }
 
     render() {
@@ -125,43 +120,13 @@ class ServiceProviderScreen extends Component {
                                 style={{
                                     marginRight: Sizes.fixPadding + 5.0
                                 }}
-                                onPress={ async () => {this.setState({ showSnackBar: true, isFavorite: !this.state.isFavorite })
-                              await AsyncStorage.getItem("user_id") .then(res=> { 
-console.log("this is the result ", res )
- axios.post("http://192.168.159.22:5000/user/addFavorite" ,{user_id: res,  mechanic_id:  this.item.mechanic_id})
-
-                              })
-                             // Take The User_id From local Storage and then post request to fav and update it                     
-                            }}
+                                onPress={() => this.setState({ showSnackBar: true, isFavorite: !this.state.isFavorite })}
                             />
-                            <View onPress={()=> {
-                                console.log("Test")
-                                Alert.alert("Image Clicked")
-                            }}>
-                                        <TouchableOpacity  onPress={()=> {
-this.props.navigation.push("Location")
-
-}}>
-
                             <Image
                                 source={require('../../assets/images/direction.png')}
                                 style={{ width: 20.0, height: 20.0, }}
-                             />
-                                     </TouchableOpacity>
-
-                            </View>
-                            <MaterialIcons name="phone" size={24} color={Colors.whiteColor} onPress={()=> { 
-
-let phoneNumber = '';
-if (Platform.OS === 'android') {
-    console.log(this.item.phone)
-phoneNumber = `tel:${this.item.phone}`
-}
-else {
-phoneNumber = `telprompt:${this.item.phone}`;
-}
-Linking.openURL(phoneNumber);
-                            }}
+                            />
+                            <MaterialIcons name="phone" size={24} color={Colors.whiteColor}
                                 style={{ marginLeft: Sizes.fixPadding + 5.0 }}
                             />
                         </TouchableOpacity>
@@ -202,6 +167,7 @@ Linking.openURL(phoneNumber);
                                 null
                         }
                     </View>
+
                 </CollapsingToolbar>
                 {this.state.currentInfoIndex == 1
                     ?
@@ -221,38 +187,11 @@ Linking.openURL(phoneNumber);
             </SafeAreaView>
         )
     }
-  async componentDidMount(){ 
-    var x= this.item.mechanic_id 
-    await axios.post("http://192.168.159.22:5000/user/getReview", {mechanic_id:x}).then(res=> {
-        var length = (res.data[0].reviews.split(",")).length
-        console.log(length)
-        console.log(length)
-        var x=  res.data[0].reviews.split(",")
-        for (let i =  0 ; i< length ; i ++){
-        var a= {
-            id : i, 
-       image : require('../../assets/images/user/user_3.jpg') , 
-       name :"" , 
-       date: "20 fivrer" , 
-       review : "" , 
-       rating : 0 , 
-        }
-        a.name = ((x[i].split(':'))[0]).split("@")[0]
-        a.review = (((x[i].split(':'))[1])).split("@")[0]
-        a.rating=parseInt(x[i].split("@")[1])
-        r.push(a)
-    }
-        })        
-        this.setState({
-            arr :r 
-                })
-                console.log(this.state.arr)
-        console.log(this.state.arr,"this is the response from the web")
-}
+
     reviews() {
         return (
             <View style={{ marginVertical: Sizes.fixPadding + 5.0 }}>
-                {this.state.arr.map((item) => (
+                {reviewsList.map((item) => (
                     <View key={`${item.id}`}>
                         <View style={styles.reviewsWrapStyle}>
                             <View style={{
@@ -272,21 +211,20 @@ Linking.openURL(phoneNumber);
                                         <Text style={{ ...Fonts.grayColor10Medium }}>
                                             {item.date}
                                         </Text>
-
-                                        <Text style={{ ...Fonts.grayColor16Medium }} > 
-                                         {item.review}
-
-                                        </Text>
                                     </View>
                                 </View>
-                                {this.showRating({ number: 5 })}
+                                {this.showRating({ number: item.rating })}
                             </View>
+                            <Text style={{ ...Fonts.blackColor12Regular, marginTop: Sizes.fixPadding }}>
+                                {item.review}
+                            </Text>
                         </View>
                     </View>
                 ))}
             </View>
         )
     }
+
     showRating({ number }) {
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -349,7 +287,6 @@ Linking.openURL(phoneNumber);
     }
 
     locationInfo() {
-        console.log(this.item)
         return (
             <View style={{ marginHorizontal: Sizes.fixPadding * 2.0, }}>
                 <Text style={{ ...Fonts.blackColor18Bold, marginBottom: Sizes.fixPadding }}>
@@ -359,14 +296,14 @@ Linking.openURL(phoneNumber);
                     <MapView
                         style={{ height: 191 }}
                         initialRegion={{
-                            latitude: this.item.coordinate.latitude,
-                            longitude: this.item.coordinate.longitude,
+                            latitude: 37.33233141,
+                            longitude: -122.0312186,
                             latitudeDelta: 0.10,
                             longitudeDelta: 0.10,
                         }}
                     >
                         <Marker
-                            coordinate={{ latitude: this.item.coordinate.latitude, longitude: this.item.coordinate.longitude }}
+                            coordinate={{ latitude: 37.33233141, longitude: -122.0312186 }}
                         >
                             <Image
                                 source={require('../../assets/images/custom_marker.png')}
@@ -418,42 +355,14 @@ Linking.openURL(phoneNumber);
         return total;
     }
 
-      bookNowButton() {
+    bookNowButton() {
         return (
             <TouchableOpacity
                 activeOpacity={0.9}
-                onPress={() => { 
-                    console.log(this.item)
-                    var work = ""
-                    for (let i = 0 ; i< servicesList.length; i ++){ 
-  if(servicesList[i].isSelected){
-  work+=servicesList[i].service+" "
-  }
-  work +=this.state.work
-
-                    }
-                    
-                     AsyncStorage.getItem("user_id").then(async (res)=> {
-            await axios.post("http://192.168.159.22:5000/user/addReservation", {
-          mechanic_id : this.item.mechanic_id , 
-          user_id : res , 
-          work : work  , 
-
-
-            }).then(rez=> {
-
-               console.log("Reservation Added")
-
-
-            })
-
-
-                   })
-                    
-                    alert("Your Request Has Been Sent Waiting for Response")}}
+                onPress={() => this.props.navigation.push('SelectCar')}
                 style={styles.bookNowButtonStyle}>
                 <Text style={{ ...Fonts.whiteColor18Bold }}>
-                    Book now 
+                    Book now (${`${this.totalAmount()}`})
                 </Text>
             </TouchableOpacity>
         )
@@ -499,10 +408,6 @@ Linking.openURL(phoneNumber);
                         </View> :
                         null
                 }
-                <TextInput
-                 value = {this.state.work}
-                
-                />
             </TouchableOpacity>
         )
         return (
@@ -546,6 +451,7 @@ Linking.openURL(phoneNumber);
             </View>
         )
     }
+
     servicesAboutAndReviews({ title, index }) {
         return (
             <TouchableOpacity
@@ -583,7 +489,7 @@ Linking.openURL(phoneNumber);
                         style={{ marginHorizontal: Sizes.fixPadding - 5.0 }}
                     />
                     <Text style={{ ...Fonts.blackColor14Regular }}>
-                        ({this.item.peopleCount})
+                        (728 Reviews)
                     </Text>
                 </View>
             </View>

@@ -1,60 +1,46 @@
 import React, { useState, useRef, Component } from 'react';
 import { Fonts, Colors, Sizes, } from "../../constants/styles";
-import { Text,View,SafeAreaView,StatusBar,StyleSheet,Animated,Dimensions,BackHandler} from "react-native";
+import {
+    Text,
+    View,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Animated,
+    Dimensions,
+    BackHandler
+} from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { withNavigation } from "react-navigation";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { Snackbar } from 'react-native-paper';
 import { TransitionPresets } from 'react-navigation-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
 
 const { width } = Dimensions.get('screen');
-var notificationList=[]
 
+const notificationList = [
+    {
+        key: '1',
+        title: 'Get 30% Off',
+        description: 'Use code Wajih & get 30% off on your car service.',
+
+    },
+    {
+        key: '2',
+        title: 'Congratulations..',
+        description: 'Congratulations.. Your car has been successfully serviced.',
+    },
+    {
+        key: '3',
+        title: 'Rate us now',
+        description: 'Your feedback are very important for us.Tap here to rate us now.',
+    },
+];
 
 class NotificationsScreen extends Component {
-state ={
-reload : true  , 
-notificationList : []
-}
-async  componentDidMount() {
-// get the user id then request to the back to get the reservation then you must get to the co
- await AsyncStorage.getItem("user_id").then(async (res) => { 
-var arr = []
-    await axios.post("http://192.168.1.146:5000/user/getReservation", {user_id : res}).then(async (res1)=> { 
-for (let i = 0 ; i< res1.data.length ;i ++)
-{
-if(res1.data[i].response!="still"){
-    arr.push({
-key: 0 , 
-title : '' , 
-description : ''
 
-
-
-})
-arr[i].key= i ; 
-arr[i].title =res1.data[i].reservation.split(":")[2] 
-if(res1.data[i].response=="accept")
-arr[i].description = "Your Request Has Been Accepted"
-else 
-if(res1.data[i].response =="Refuser"){
-arr[i].description= "Your Request Has Been Denied"
-
-}
-}
-}
-})
-console.log(arr)
-this.setState({
-    notificationList : arr
-
-})
-})
-
-notificationList = this.state.notificationList
-BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(this));
     }
 
     componentWillUnmount() {
@@ -67,27 +53,25 @@ BackHandler.addEventListener('hardwareBackPress', this.handleBackButton.bind(thi
     };
 
     render() {
-        {console.log(this.props,'props')}
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: Colors.whiteColor }}>
                 <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
-                <Notifications props={this.props} t = {this.state} />
+                <Notifications props={this.props} />
             </SafeAreaView>
         )
     }
 }
+
 const rowTranslateAnimatedValues = {};
-const Notifications = ({ props  , t}) => {
+
+const Notifications = ({ props }) => {
+
     const [showSnackBar, setShowSnackBar] = useState(false);
 
     const [snackBarMsg, setSnackBarMsg] = useState('');
 
-    var [listData, setListData] = useState(notificationList);
+    const [listData, setListData] = useState(notificationList);
 
-setTimeout(()=> { 
-setListData(notificationList)
-console.log(listData ," test")
-},0)
     Array(listData.length + 1)
         .fill('')
         .forEach((_, i) => {

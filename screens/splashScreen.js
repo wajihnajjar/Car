@@ -28,7 +28,7 @@ class SplashScreen extends Component {
                         style={styles.pageStyle}
                     >
                         <Text style={{ ...Fonts.whiteColor48Medium }}>
-                            Carhbty
+                            CarClean
                         </Text>
                         <CircleFade size={56} color={Colors.whiteColor}
                             style={{

@@ -96,41 +96,20 @@ class EditProfileScreen extends Component {
         )
     }
 
-  senddata = () => {
-    // this.props.navigation.pop();
-    console.log("hani hnee Sa7bi");
-    let data = {
-      username: this.state.name,
-      email: this.state.email,
-      PhoneNumber: this.state.phoneNumber,
-      img: this.state.img,
-    };
-    console.log(data);
-    axios.post("http:// 192.168.22.231:5000/user/profil", data).then((res) => {
-      console.log(res, "tba3thet");
-    });
-  };
-  phoneNumberTextField() {
-    return (
-      <TextInput
-        label="Phone Number"
-        mode="outlined"
-        keyboardType="numeric"
-        value={this.state.phoneNumber}
-        onChangeText={(text) => this.setState({ phoneNumber: text })}
-        style={styles.textFieldStyle}
-        selectionColor={Colors.primaryColor}
-        theme={{
-          colors: {
-            primary: Colors.primaryColor,
-            underlineColor: "transparent",
-          },
-        }}
-      />
-    );
-  }
-  
-  
+    phoneNumberTextField() {
+        return (
+            <TextInput
+                label="Phone Number"
+                mode="outlined"
+                keyboardType="numeric"
+                value={this.state.phoneNumber}
+                onChangeText={text => this.setState({ phoneNumber: text })}
+                style={styles.textFieldStyle}
+                selectionColor={Colors.primaryColor}
+                theme={{ colors: { primary: Colors.primaryColor, underlineColor: 'transparent', } }}
+            />
+        )
+    }
 
     passwordTextField() {
         return (
